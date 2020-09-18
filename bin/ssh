@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+if [ -z "$1" ]; then
+  echo "Please specify one of the containers below:"
+  bin/status --services
+  exit 1;
+fi
+
+bin/docker-compose exec "$1" bash

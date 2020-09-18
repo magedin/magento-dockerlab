@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+bin/cli bin/n98-magerun2.phar dev:console

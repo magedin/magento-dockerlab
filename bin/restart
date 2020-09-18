@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+bin/stop $1
+bin/start $1
