@@ -1,0 +1,72 @@
+# Mark Shust's Docker Configuration for Magento
+# (https://github.com/markshust/docker-magento)
+#
+# Version 33.0.0
+
+version: "3"
+
+services:
+  nginx:
+    image: magedin/nginx:1.19
+    ports:
+      - "80:8080"
+      - "443:8443"
+    links:
+      - db
+      - php
+    volumes: &appvolumes
+      - ~/.composer:/var/www/.composer:cached
+      - appdata:/var/www/html
+      - sockdata:/sock
+      - ssldata:/etc/nginx/certs
+
+  php:
+    image: magedin/magento2-php:7.4-fpm
+    links:
+      - db
+    volumes: *appvolumes
+
+  db:
+    image: percona:5.7
+    command: --max_allowed_packet=64M
+    ports:
+      - "3306:3306"
+    env_file: env/db.env
+    volumes:
+      - dbdata:/var/lib/mysql
+
+  redis:
+    image: redis:5.0
+
+  elasticsearch:
+    image: magedin/magento2-elasticsearch:7.6.2
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    environment:
+      - "discovery.type=single-node"
+
+  rabbitmq:
+    image: rabbitmq:3.7-management
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+    volumes:
+      - rabbitmqdata:/var/lib/rabbitmq
+
+  # Disabling cron by default as it uses higher CPU, enable if needed
+  #cron:
+  #  image: markoshust/magento-php:7.4-fpm-0
+  #  user: root
+  #  command: /usr/local/bin/cronstart
+  #  tty: true
+  #  links:
+  #    - db
+  #  volumes: *appvolumes
+
+volumes:
+  appdata:
+  dbdata:
+  rabbitmqdata:
+  sockdata:
+  ssldata:
