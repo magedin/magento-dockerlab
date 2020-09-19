@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+bin/removeall -f
+rm -rf src

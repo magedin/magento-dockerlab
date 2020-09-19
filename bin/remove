@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-bin/docker-compose rm --stop
+bin/docker-compose rm --stop "$@"
