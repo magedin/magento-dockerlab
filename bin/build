@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+bin/download $1
+bin/start
+bin/install
+echo "Enjoy!"

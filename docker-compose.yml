@@ -24,6 +24,11 @@ services:
     image: magedin/magento2-php:7.4-fpm
     links:
       - db
+    depends_on:
+      - db
+      - redis
+      - elasticsearch
+      - rabbitmq
     volumes: *appvolumes
 
   db:

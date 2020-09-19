@@ -1,12 +1,18 @@
 #!/usr/bin/env bash
 
+if [ "$1" ]; then
+  bin/download "$1"
+fi
+
 source env/db.env
 source env/magento.env
+source env/elasticsearch.env
 
 BASE_URL=${1:-magento2.test}
 
+#echo "Waiting for all the services to be up and running..."
+sleep 5 #Ensure containers are started...
 bin/clinotty chmod u+x bin/magento
-sleep 10 #Ensure containers are started...
 
 if hash composer 2>/dev/null; then
     PUBLIC_KEY="$(composer config -gl | grep '\[http-basic.repo.magento.com.username\]' | cut -c40-)"
@@ -71,8 +77,8 @@ INSTALL_COMMAND="setup:install \
   --session-save-redis-host=redis \
   --session-save-redis-log-level=4 \
   --session-save-redis-db=2 \
-  --search-engine="elasticsearch7" \
-  --elasticsearch-host="elasticsearch" \
+  --search-engine="$SEARCH_ENGINE" \
+  --elasticsearch-host="$ES_HOST" \
   --use-rewrites=1"
 
 bin/magento $INSTALL_COMMAND
@@ -82,11 +88,11 @@ bin/clinotty bin/magento deploy:mode:set developer
 
 bin/clinotty bin/magento indexer:reindex
 
-echo "Forcing deploy of static content to speed up initial requests..."
-bin/clinotty bin/magento setup:static-content:deploy -f
+# echo "Forcing deploy of static content to speed up initial requests..."
+# bin/clinotty bin/magento setup:static-content:deploy -f
 
-echo "Re-indexing with Elasticsearch..."
-bin/clinotty bin/magento indexer:reindex
+# echo "Re-indexing with Elasticsearch..."
+# bin/clinotty bin/magento indexer:reindex
 
-echo "Clearing the cache to apply updates..."
-bin/clinotty bin/magento cache:flush
+# echo "Clearing the cache to apply updates..."
+# bin/clinotty bin/magento cache:flush
