@@ -1,23 +1,15 @@
-language: ruby
 sudo: required
 services:
   - docker
 
 env:
-  - DOCKER_COMPOSE_VERSION=1.26.2
+  - DOCKER_COMPOSE_VERSION=1.27.3
 
-#Installing a newer Docker version
 before_install:
-  - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-  - sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
-  - sudo apt-get update
-  - sudo apt-get -y -o Dpkg::Options::="--force-confnew" install docker-ce
+  - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
+  - chmod +x docker-compose
+  - sudo mv docker-compose /usr/local/bin
 
-#Alternatively, you can use addons instead of before_install to update via apt as well:
-#addons:
-#  apt:
-#    packages:
-#      - docker-ce
-
-#script:
-#  - bundle exec rake test
+script:
+  - bin/start
+  - bin/destroy
