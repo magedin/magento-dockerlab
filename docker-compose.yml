@@ -21,7 +21,7 @@ services:
       - ssldata:/etc/nginx/certs
 
   php:
-    image: magedin/magento2-php:7.4-fpm
+    image: magedin/magento2-php:7.4-fpm-buster
     links:
       - db
     depends_on:
