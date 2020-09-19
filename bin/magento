@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-bin/cli bin/magento "$@"
+bin/php bin/magento "$@"

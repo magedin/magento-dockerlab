@@ -6,4 +6,4 @@ if [ -z "$1" ]; then
   exit 1;
 fi
 
-bin/docker-compose exec "$1" bash
+bin/docker-compose exec "$@" bash

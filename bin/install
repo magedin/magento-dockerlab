@@ -1,0 +1,92 @@
+#!/usr/bin/env bash
+
+source env/db.env
+source env/magento.env
+
+BASE_URL=${1:-magento2.test}
+
+bin/clinotty chmod u+x bin/magento
+sleep 10 #Ensure containers are started...
+
+if hash composer 2>/dev/null; then
+    PUBLIC_KEY="$(composer config -gl | grep '\[http-basic.repo.magento.com.username\]' | cut -c40-)"
+    PRIVATE_KEY="$(composer config -gl | grep '\[http-basic.repo.magento.com.password\]' | cut -c40-)"
+fi
+
+if [ -z "$PUBLIC_KEY" ] || [ -z "$PRIVATE_KEY" ]; then
+    exec < /dev/tty
+    echo
+    echo
+    echo "    Authentication required (repo.magento.com, public_key and private_key):"
+    read -p "        Username: " PUBLIC_KEY
+    read -p "        Password: " PRIVATE_KEY
+    echo
+    if [ -n "$PUBLIC_KEY" ] && [ -n "$PRIVATE_KEY" ] && hash composer 2>/dev/null; then
+        read -p "    Add authentication information to host composer config? y/n: " ADD_AUTH
+        echo
+        if [[ $ADD_AUTH =~ ^[Yy]$ ]]; then
+            composer global config http-basic.repo.magento.com $PUBLIC_KEY $PRIVATE_KEY
+        fi
+        ADD_AUTH=''
+    fi
+    exec <&-
+fi
+
+if [ -n "$PUBLIC_KEY" ] && [ -n "$PRIVATE_KEY" ]; then
+    bin/clinotty composer config http-basic.repo.magento.com $PUBLIC_KEY $PRIVATE_KEY
+    PUBLIC_KEY=''
+    PRIVATE_KEY=''
+fi
+
+#bin/clinotty composer global require hirak/prestissimo
+#bin/clinotty composer update
+
+INSTALL_COMMAND="setup:install \
+  --db-host="$MYSQL_HOST" \
+  --db-name="$MYSQL_DATABASE" \
+  --db-user="$MYSQL_USER" \
+  --db-password="$MYSQL_PASSWORD" \
+  --base-url=http://$BASE_URL/ \
+  --backend-frontname="$ADMIN_URI" \
+  --admin-firstname="$ADMIN_FIRSTNAME" \
+  --admin-lastname="$ADMIN_LASTNAME" \
+  --admin-email="$ADMIN_EMAIL" \
+  --admin-user="$ADMIN_USER" \
+  --admin-password="$ADMIN_PASSWORD" \
+  --language=en_US \
+  --currency=USD \
+  --timezone=America/New_York \
+  --amqp-host=rabbitmq \
+  --amqp-port=5672 \
+  --amqp-user=guest \
+  --amqp-password=guest \
+  --amqp-virtualhost=/ \
+  --cache-backend=redis \
+  --cache-backend-redis-server=redis \
+  --cache-backend-redis-db=0 \
+  --page-cache=redis \
+  --page-cache-redis-server=redis \
+  --page-cache-redis-db=1 \
+  --session-save=redis \
+  --session-save-redis-host=redis \
+  --session-save-redis-log-level=4 \
+  --session-save-redis-db=2 \
+  --search-engine="elasticsearch7" \
+  --elasticsearch-host="elasticsearch" \
+  --use-rewrites=1"
+
+bin/magento $INSTALL_COMMAND
+
+echo "Turning on developer mode.."
+bin/clinotty bin/magento deploy:mode:set developer
+
+bin/clinotty bin/magento indexer:reindex
+
+echo "Forcing deploy of static content to speed up initial requests..."
+bin/clinotty bin/magento setup:static-content:deploy -f
+
+echo "Re-indexing with Elasticsearch..."
+bin/clinotty bin/magento indexer:reindex
+
+echo "Clearing the cache to apply updates..."
+bin/clinotty bin/magento cache:flush
