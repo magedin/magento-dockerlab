@@ -15,7 +15,7 @@ function repoExists() {
 
 function downloadVersion() {
   repoExists $3 $1
-  echo "Downloading Magento version $3..."
+  echo "Downloading Magento $3 version..."
   (cd $2 && curl -OLs $1)
 }
 
