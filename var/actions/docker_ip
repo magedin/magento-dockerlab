@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+docker run --rm alpine ip route | awk 'NR==1 {print $3}'

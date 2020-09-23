@@ -4,6 +4,7 @@ if [ ! -d "./src" ]; then
   mkdir -p ./src
 fi
 
+var/actions/xdebug_prepare
 bin/docker-compose up -d --remove-orphans $1
 
 ## Blackfire support
