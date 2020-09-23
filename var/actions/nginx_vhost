@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+source ./env/magento.env
+HOST="$BASE_URL"
+
+[ -z "$HOST" ] && echo "There's no BASE_URL specified. Please check the file env/magento.env." && exit
+
+TEMPLATE=./var/template/nginx/magento2.conf
+DEST=config/nginx/conf.d/"$HOST".conf
+
+if [ -f $DEST ]; then
+  rm -rf $DEST
+fi
+
+cp $TEMPLATE $DEST
+sed -i -e "s/{host}/$HOST/g" $DEST

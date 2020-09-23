@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 bin/download $1
+var/actions/nginx_vhost
 bin/start
+bin/copytocontainer --all
 bin/install
 echo "Enjoy!"
