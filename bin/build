@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-bin/download $1
+bin/download
 var/actions/nginx_vhost
 bin/start
 bin/copytocontainer --all

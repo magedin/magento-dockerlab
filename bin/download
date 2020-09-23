@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # [ -z "$1" ] && echo "Please specify the version to download (ex. 2.0.0)" && exit
+source ./env/magento.env
 
 TARGET_DIR=~/.magento-dockerlab
 SRC_DIR=./src
@@ -28,11 +29,11 @@ function isTargetDirEmpty() {
 
 isTargetDirEmpty $SRC_DIR
 
-if [ -z "$1" ]; then
+if [ -z "$MAGENTO_VERSION" ]; then
   V=latest
   echo "The latest version of Magento 2 will be used..."
 else
-  V="$1"
+  V="$MAGENTO_VERSION"
   echo "Using the version $V..."
 fi
 
