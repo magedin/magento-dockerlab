@@ -37,7 +37,7 @@ else
   echo "Using the version $V..."
 fi
 
-REPO=https://github.com/tiagosampaio/magento-opensource-releases/archive/$V.tar.gz
+REPO=https://github.com/magedin/magento-opensource-releases/archive/$V.tar.gz
 FILE_NAME=$V.tar.gz
 LOCAL_FILE=$TARGET_DIR/$V.tar.gz
 
