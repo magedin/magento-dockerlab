@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-bin/download
+
+bin/magento-extract
 var/actions/nginx_vhost
 bin/start
 bin/copytocontainer --all

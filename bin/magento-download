@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+# [ -z "$1" ] && echo "Please specify the version to download (ex. 2.0.0)" && exit
+source ./env/config.env
+
+if [ -z "$1" ]; then
+	source ./env/magento.env
+else
+	MAGENTO_VERSION="$1"
+fi
+
+# ----------------------------------------------------------------------------
+
+function repoExists() {
+  HTTP_CODE=$(curl -ILs "$2" | grep "HTTP/1.1" | tail -1 | cut -d$' ' -f2)
+  if [ "$HTTP_CODE" == "404" ]; then
+    echo "The version $1 does not exist or is not available."
+    exit 1
+  fi
+}
+
+function downloadVersion() {
+  repoExists $3 $1
+  echo "Downloading Magento $3 version..."
+  (cd $2 && curl -OLs $1)
+}
+
+# ----------------------------------------------------------------------------
+
+if [ -z "$MAGENTO_VERSION" ]; then
+  MAGENTO_VERSION=latest
+  echo "The latest version of Magento 2 will be used..."
+else
+  echo "Using the version $MAGENTO_VERSION..."
+fi
+
+FILE_NAME=$MAGENTO_VERSION.tar.gz
+REPO=$REPOSITORY_URL/$FILE_NAME
+LOCAL_FILE=$DOWNLOAD_DIR/$FILE_NAME
+
+if [ ! -f $LOCAL_FILE ]; then
+    downloadVersion $REPO $DOWNLOAD_DIR $MAGENTO_VERSION
+    echo "Magento was downloaded."
+else 
+	echo "Magento $MAGENTO_VERSION version already exists locally."
+fi
