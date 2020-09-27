@@ -2,10 +2,23 @@
 # [ -z "$1" ] && echo "Please specify the version to download (ex. 2.0.0)" && exit
 source ./env/config.env
 
+# Reference: https://sookocheff.com/post/bash/parsing-bash-script-arguments-with-shopts/
+while getopts ":l" opt; do
+    case ${opt} in
+        l ) ls -1 $DOWNLOAD_DIR | sed -e 's/\.tar.gz$//'; exit;
+        ;;
+    esac
+done
+shift $((OPTIND -1))
+
+if [ ! -d "$DOWNLOAD_DIR" ]; then
+    mkdir $DOWNLOAD_DIR
+fi
+
 if [ -z "$1" ]; then
-	source ./env/magento.env
+    source ./env/magento.env
 else
-	MAGENTO_VERSION="$1"
+    MAGENTO_VERSION="$1"
 fi
 
 # ----------------------------------------------------------------------------
@@ -40,6 +53,6 @@ LOCAL_FILE=$DOWNLOAD_DIR/$FILE_NAME
 if [ ! -f $LOCAL_FILE ]; then
     downloadVersion $REPO $DOWNLOAD_DIR $MAGENTO_VERSION
     echo "Magento was downloaded."
-else 
-	echo "Magento $MAGENTO_VERSION version already exists locally."
+else
+    echo "Magento $MAGENTO_VERSION version already exists locally."
 fi
