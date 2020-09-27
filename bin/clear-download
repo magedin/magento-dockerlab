@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+source ./env/config.env
+
+if [ -z "$1" ]; then
+	FILE="*"
+else
+	FILE="$1.tar.gz"
+fi
+
+rm -rf $DOWNLOAD_DIR/$FILE
