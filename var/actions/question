@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+read -p "$1. Please type 'y' for YES or any other key for NO." -n 1 -r
+
+echo
+
+if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+	echo 0
+	exit 1
+fi
+
+echo 1
