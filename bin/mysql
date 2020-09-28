@@ -1,9 +1,12 @@
 #!/usr/bin/env bash
 source env/db.env
+
+COMMAND_BASE="db mysql -h${MYSQL_HOST} -u${MYSQL_USER} -p${MYSQL_PASSWORD} -A ${MYSQL_DATABASE}"
+
 if [ -t 0 ]; then
   # Need tty to run mysql shell
-  bin/cli mysql -h${MYSQL_HOST} -u${MYSQL_USER} -p${MYSQL_PASSWORD} ${MYSQL_DATABASE} "$@"
+  bin/exec $COMMAND_BASE "$@"
 else
   # Read from stdin, ex: bin/mysql < dbdump.sql
-  bin/clinotty mysql -h${MYSQL_HOST} -u${MYSQL_USER} -p${MYSQL_PASSWORD} ${MYSQL_DATABASE} "$@"
+  bin/exec -T COMMAND_BASE "$@"
 fi
