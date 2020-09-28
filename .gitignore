@@ -1,5 +1,5 @@
 /.idea/
-/src/*
+/src
 /docker-compose.custom.yml
 /*.sql
 /*.tar.*
