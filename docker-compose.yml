@@ -1,3 +1,5 @@
+# MagedIn - Magento DockerLab
+# (https://github.com/magedin/magento-dockerlab)
 version: "3"
 
 services:

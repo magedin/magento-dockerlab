@@ -1,2 +1,8 @@
 #!/usr/bin/env bash
-bin/n98-magerun2 db:dump --stdout "$@"
+source env/db.env
+
+FILENAME="${MYSQL_DUMP_DIR}/magento.sql"
+#FILENAME="magento.sql"
+COMMAND_BASE="/usr/bin/mysqldump -h ${MYSQL_HOST} -u ${MYSQL_USER} -p${MYSQL_PASSWORD} ${MYSQL_DATABASE} > ${FILENAME}"
+
+bin/exec db ${COMMAND_BASE} "$@"
