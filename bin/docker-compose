@@ -1,2 +1,7 @@
 #!/usr/bin/env bash
-docker-compose -f docker-compose.yml -f docker-compose.dev.yml "$@"
+
+if [ ! -f ./docker-compose.custom.yml ]; then
+    docker-compose -f docker-compose.yml -f docker-compose.dev.yml "$@"
+else
+    docker-compose -f docker-compose.yml -f docker-compose.dev.yml -f docker-compose.custom.yml "$@"
+fi
