@@ -36,6 +36,7 @@ services:
     env_file: env/db.env
     volumes:
       - dbdata:/var/lib/mysql
+      - ./var/dumps:/var/dumps
 
   redis:
     image: redis:5.0

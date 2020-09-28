@@ -1,3 +1,6 @@
 /.idea/
 /src/*
 /docker-compose.custom.yml
+/*.sql
+/*.tar.*
+/*.gz
