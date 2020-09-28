@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 source ./env/magento.env
 HOST="$BASE_URL"
+UPSTREAM="fastcgi_$(./var/actions/random)"
 
 [ -z "$HOST" ] && echo "There's no BASE_URL specified. Please check the file env/magento.env." && exit
 
@@ -12,4 +13,5 @@ if [ -f $DEST ]; then
 fi
 
 cp $TEMPLATE $DEST
-sed -i -e "s/{host}/$HOST/g" $DEST
+sed -i -e "s/{{host}}/$HOST/g" $DEST
+sed -i -e "s/{{upstream}}/$UPSTREAM/g" $DEST
