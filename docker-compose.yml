@@ -1,13 +1,9 @@
-# Mark Shust's Docker Configuration for Magento
-# (https://github.com/markshust/docker-magento)
-#
-# Version 33.0.0
-
 version: "3"
 
 services:
   nginx:
     image: magedin/nginx:1.19
+    user: www
     ports:
       - "80:8080"
       - "443:8443"
@@ -22,6 +18,7 @@ services:
 
   php:
     image: magedin/magento2-php:7.4-fpm-buster
+    user: www
     links:
       - db
     depends_on:
