@@ -51,6 +51,14 @@ services:
     environment:
       - "discovery.type=single-node"
 
+  kibana:
+    image: kibana:7.6.2
+    depends_on:
+      - elasticsearch
+    ports:
+      - "5601:5601"
+    env_file: env/kibana.env
+
   rabbitmq:
     image: rabbitmq:3.7-management
     ports:
