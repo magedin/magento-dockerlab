@@ -50,6 +50,8 @@ services:
       - "9300:9300"
     environment:
       - "discovery.type=single-node"
+    volumes:
+      - esdata:/usr/share/elasticsearch/data
 
   kibana:
     image: kibana:7.6.2
@@ -84,3 +86,4 @@ volumes:
   rabbitmqdata:
   sockdata:
   ssldata:
+  esdata:
