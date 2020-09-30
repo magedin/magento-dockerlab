@@ -3,5 +3,7 @@ source ./env/config.env
 source ./env/magento.env
 
 bin/removeall -f
-rm -rf $EXTRACT_DIR
+#rm -rf $EXTRACT_DIR
 rm -rf $NGINX_CONF_DIR/$BASE_URL.conf
+rm -rf ./var/xdebug/.xdebug
+
