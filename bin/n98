@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 
-bin/exec php n98
+bin/exec php n98 "$@"
 
