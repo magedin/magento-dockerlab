@@ -1,2 +1,68 @@
 #!/usr/bin/env bash
-bin/docker-compose rm --stop "$@"
+
+function help() {
+    printf "bin/$(basename "$0") [-h] [-av]
+
+where:
+    -h  Show this help text
+    -a  Removes all (containers and volumes)
+    -v  Removes volumes
+";
+}
+
+function removeVolumes() {
+    echo "Removing volumes...";
+    current_folder=${PWD##*/}
+    volume_prefix=`echo $current_folder | awk '{print tolower($0)}' | sed 's/\.//g'`
+    docker volume rm ${volume_prefix}_appdata "$@"
+    docker volume rm ${volume_prefix}_dbdata "$@"
+    docker volume rm ${volume_prefix}_rabbitmqdata "$@"
+    docker volume rm ${volume_prefix}_sockdata "$@"
+    docker volume rm ${volume_prefix}_ssldata "$@"
+    docker volume rm ${volume_prefix}_esdata "$@"
+    echo "Done!";
+}
+
+function removeContainers() {
+    echo "Removing containers...";
+    bin/docker-compose rm --stop -f "$@";
+    echo "Done!";
+}
+
+# By default it removes only the containers.
+if [ -z "$1" ]; then
+    removeContainers
+    exit 0;
+fi
+
+# Reference: https://sookocheff.com/post/bash/parsing-bash-script-arguments-with-shopts/
+while getopts ":av" opt; do
+    case ${opt} in
+        a )
+            removeContainers;
+            removeVolumes
+            exit 0;
+            ;;
+        v )
+            removeVolumes;
+            exit 0;
+            ;;
+        h )
+            help;
+            exit 0;
+            ;;
+        \? )
+            help;
+            exit 0;
+            ;;
+        : )
+            echo "Invalid";
+            exit 1;
+            ;;
+        * )
+            echo "Default option."
+            exit 1;
+            ;;
+    esac
+done
+shift $((OPTIND -1))
