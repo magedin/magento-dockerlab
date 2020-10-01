@@ -1,2 +1,8 @@
 #!/usr/bin/env bash
+
+if [ -z "$1" ]; then
+    bin/cli php -v
+    exit 0;
+fi
+
 bin/cli php "$@"
