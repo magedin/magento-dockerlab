@@ -1,13 +1,89 @@
 #!/usr/bin/env bash
 
-source ./var/actions/xdebug_status
+function isXdebugEnabled() {
+    RESULT=$(bin/php -v | grep "Xdebug")
 
-if (isXdebugEnabled == 0); then
-  echo "Enabling Xdebug..."
-  enableXdebug
-  echo "Done!"
-else
-  echo "Disabling Xdebug..."
-  disableXdebug
-  echo "Done!"
-fi
+    if [ -z "$RESULT" ]; then
+        return 1;
+    else
+        return 0;
+    fi
+}
+
+
+function rstartContainers() {
+  bin/restart php > /dev/null 2>&1;
+}
+
+
+function disableXdebug() {
+    if ( ! isXdebugEnabled ); then
+        echo "Xdebug is already disabled."
+        exit 0;
+    fi
+
+    echo "Disabling Xdebug..."
+    bin/cli sed -i -e 's/^zend_extension/\;zend_extension/g' /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+    rstartContainers
+    echo "Xdebug has been disabled."
+}
+
+
+function enableXdebug() {
+    if ( isXdebugEnabled ); then
+        echo "Xdebug is already enabled."
+        exit 0;
+    fi
+
+    echo "Enabling Xdebug..."
+    bin/cli sed -i -e 's/^\;zend_extension/zend_extension/g' /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+    rstartContainers
+    echo "Xdebug has been enabled."
+}
+
+
+function toggleXdebug() {
+    if ( isXdebugEnabled ); then
+        disableXdebug
+    else
+        enableXdebug
+    fi
+}
+
+# Reference: https://sookocheff.com/post/bash/parsing-bash-script-arguments-with-shopts/
+while getopts ":des" opt; do
+    case ${opt} in
+        d )
+            disableXdebug
+            exit 0;
+            ;;
+        e )
+            enableXdebug
+            exit 0;
+            ;;
+        s )
+            if ( isXdebugEnabled ); then
+              echo "Xdebug is ENABLED."
+            else
+              echo "Xdebug is DISABLED."
+            fi
+            exit 0;
+            ;;
+        \? )
+            #help;
+            echo "Invalid option.";
+            exit 0;
+            ;;
+        : )
+            echo "Invalid option.";
+            exit 1;
+            ;;
+        * )
+            echo "Default option."
+            exit 1;
+            ;;
+    esac
+done
+shift $((OPTIND -1))
+
+toggleXdebug
