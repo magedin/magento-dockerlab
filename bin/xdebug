@@ -2,8 +2,19 @@
 
 source ./var/actions/xdebug_status
 
+function help() {
+    printf "bin/$(basename "$0") [-h] [-des]
+
+where:
+    -h  Show this help text
+    -d  Disbale Xdebug
+    -e  Enable Xdebug
+    -s  Show Xdebug status
+";
+}
+
 # Reference: https://sookocheff.com/post/bash/parsing-bash-script-arguments-with-shopts/
-while getopts ":des" opt; do
+while getopts ":desh" opt; do
     case ${opt} in
         d )
             disableXdebug
@@ -19,6 +30,11 @@ while getopts ":des" opt; do
             else
               echo "Xdebug is DISABLED."
             fi
+            exit 0;
+            ;;
+
+        h )
+            help;
             exit 0;
             ;;
         \? )
