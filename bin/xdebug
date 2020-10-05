@@ -1,36 +1,13 @@
 #!/usr/bin/env bash
-FILE=$(pwd)/var/xdebug/.xdebug
-STATUS_ENABLED="enabled"
-STATUS_DISABLED="disabled"
 
-function disable() {
-  bin/cli sed -i -e 's/^zend_extension/\;zend_extension/g' /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
-  bin/restart php
-  echo "$STATUS_DISABLED" > $FILE
-  echo "Xdebug has been $STATUS_DISABLED."
-}
+source ./var/actions/xdebug_status
 
-function enable() {
-  bin/cli sed -i -e 's/^\;zend_extension/zend_extension/g' /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
-  bin/restart php
-  echo "$STATUS_ENABLED" > $FILE
-  echo "Xdebug has been $STATUS_ENABLED."
-}
-
-function createFile() {
-  echo "$STATUS_DISABLED" > "$FILE"
-}
-
-if [ ! -f "$FILE" ]; then
-  createFile
-fi
-
-STATUS=$(cat "$FILE")
-
-if [ "$STATUS" == "$STATUS_ENABLED" ]; then
-  disable
-elif [ "$STATUS" == "$STATUS_DISABLED" ]; then
-  enable
+if (isXdebugEnabled == 0); then
+  echo "Enabling Xdebug..."
+  enableXdebug
+  echo "Done!"
 else
-  enable
+  echo "Disabling Xdebug..."
+  disableXdebug
+  echo "Done!"
 fi
