@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+source var/actions/xdebug_status
+
+ENABLE=0
+
+if ( isXdebugEnabled ); then
+    disableXdebug
+    ENABLE=1
+fi
+
+if [ -z "$@" ]; then
+    echo "Cleaning all Magento cache."
+else
+    echo "Cleaning Magento cache type(s): $@"
+fi
+
+bin/magento cache:clean "$@" &> /dev/null
+bin/magento &> /dev/null
+
+if [ $ENABLE == 1 ]; then
+    enableXdebug
+fi
