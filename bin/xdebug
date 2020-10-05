@@ -12,7 +12,7 @@ function isXdebugEnabled() {
 
 
 function rstartContainers() {
-  bin/restart php > /dev/null 2>&1;
+  bin/restart php &> /dev/null;
 }
 
 
