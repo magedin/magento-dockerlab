@@ -1,7 +1,28 @@
 #!/usr/bin/env bash
-DOCKER_IP=$(var/actions/docker_ip)
-COMPOSE_DEV=./docker-compose.dev.yml
 
-sed -i -e 's/#extra_hosts:/extra_hosts:/g' $COMPOSE_DEV
-sed -i -e "s/host.docker.internal:IP/host.docker.internal:$DOCKER_IP/g" $COMPOSE_DEV
-sed -i -e 's/#  - "host/  - "host/g' $COMPOSE_DEV
+
+COMPOSE_DEV=./docker-compose.dev.yml
+COMPOSE_TEMPLATE=./var/template/docker-compose/custom.yml
+COMPOSE_CUSTOM=./docker-compose.custom.yml
+
+function getDockerIp() {
+    DOCKER_IP=$(var/actions/docker_ip);
+    echo $DOCKER_IP;
+}
+
+function copyCustomFileTemplate() {
+    if [ -f "$COMPOSE_CUSTOM" ]; then
+        exit 0;
+    fi
+
+    cp ${COMPOSE_TEMPLATE} ${COMPOSE_CUSTOM}
+}
+
+function replacePlaceholders() {
+    sed -i -e 's/#extra_hosts:/extra_hosts:/g' $COMPOSE_CUSTOM
+    sed -i -e "s/host.docker.internal:{{IP}}/host.docker.internal:$(getDockerIp)/g" $COMPOSE_CUSTOM
+    sed -i -e 's/#  - "host/  - "host/g' $COMPOSE_CUSTOM
+}
+
+copyCustomFileTemplate
+replacePlaceholders

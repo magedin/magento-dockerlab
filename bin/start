@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 
-if [ ! -d "./src" ]; then
-  mkdir -p ./src
+source ./env/config.env
+
+if [ ! -d "$EXTRACT_DIR" ]; then
+  mkdir -p $EXTRACT_DIR
 fi
 
 var/actions/xdebug_prepare
