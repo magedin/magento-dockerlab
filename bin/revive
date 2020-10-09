@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+echo "Killing containers."
+bin/stop $1 &> /dev/null;
+echo "Creating containers."
+bin/start $1 &> /dev/null;
+echo "Done!"
