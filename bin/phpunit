@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+bin/exec php vendor/bin/phpunit -c /var/www/html/dev/tests/unit/phpunit.xml.dist "$@"
