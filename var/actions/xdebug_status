@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 function isXdebugEnabled() {
-    RESULT=$(bin/php -v | grep "Xdebug")
+    RESULT=$(bin/php -m | grep "Xdebug")
 
     if [ -z "$RESULT" ]; then
         return 1;
