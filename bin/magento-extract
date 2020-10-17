@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 # [ -z "$1" ] && echo "Please specify the version to download (ex. 2.0.0)" && exit
 
-source ./env/config.env
+source ./var/actions/env_create
+source ./var/env/config.env
 
 
 function isTargetDirEmpty() {
@@ -31,7 +32,7 @@ function sourceFileExists() {
 
 
 if [ -z "$1" ]; then
-	source ./env/magento.env
+	source ./.env
 else
 	MAGENTO_VERSION="$1"
 fi

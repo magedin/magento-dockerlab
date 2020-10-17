@@ -1,11 +1,12 @@
 #!/usr/bin/env bash
 
-source ./env/config.env
+source ./var/env/config.env
 
 if [ ! -d "$EXTRACT_DIR" ]; then
   mkdir -p $EXTRACT_DIR
 fi
 
+var/actions/env_create
 var/actions/xdebug_prepare
 bin/docker-compose up -d --remove-orphans $1
 

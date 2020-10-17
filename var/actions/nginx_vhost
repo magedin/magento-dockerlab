@@ -1,9 +1,11 @@
 #!/usr/bin/env bash
-source ./env/magento.env
+
+source ./.env
+
 HOST="$BASE_URL"
 UPSTREAM="fastcgi_$(./var/actions/random)"
 
-[ -z "$HOST" ] && echo "There's no BASE_URL specified. Please check the file env/magento.env." && exit
+[ -z "$HOST" ] && echo "There's no BASE_URL specified. Please check the file .env." && exit
 
 TEMPLATE=./var/template/nginx/magento2.conf
 DEST=config/nginx/conf.d/"$HOST".conf

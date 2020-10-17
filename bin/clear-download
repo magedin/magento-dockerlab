@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-source ./env/config.env
+source ./var/env/config.env
 
 if [ -z "$1" ]; then
 	FILE="*"

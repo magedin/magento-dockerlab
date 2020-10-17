@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+source ./var/actions/env_create
 source ./var/actions/services_status
 
 if ( ! areServicesRunning ); then
@@ -11,16 +12,12 @@ if [ "$1" ]; then
   bin/download "$1"
 fi
 
-source env/db.env
-source env/magento.env
-source env/elasticsearch.env
-source env/rabbitmq.env
-source env/redis.env
+source ./.env
 
 BASE_URL=${1:-magento2.test}
 
 #echo "Waiting for all the services to be up and running..."
-sleep 5 #Ensure containers are started...
+#sleep 5 #Ensure containers are started...
 bin/clinotty chmod u+x bin/magento
 
 if hash composer 2>/dev/null; then
@@ -90,6 +87,7 @@ INSTALL_COMMAND="setup:install \
   --elasticsearch-host="$ES_HOST" \
   --use-rewrites=1"
 
+#echo $INSTALL_COMMAND
 bin/magento $INSTALL_COMMAND
 
 echo "Turning on developer mode.."

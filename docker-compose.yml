@@ -35,7 +35,7 @@ services:
     command: --max_allowed_packet=64M
     ports:
       - "3306:3306"
-    env_file: env/db.env
+    env_file: .env
     volumes:
       - dbdata:/var/lib/mysql
       - ./var/dumps:/var/dumps
@@ -59,14 +59,14 @@ services:
       - elasticsearch
     ports:
       - "5601:5601"
-    env_file: env/kibana.env
+    env_file: var/env/kibana.env
 
   rabbitmq:
     image: rabbitmq:3.7-management
     ports:
       - "15672:15672"
       - "5672:5672"
-    env_file: env/rabbitmq.env
+    env_file: var/env/rabbitmq.env
     volumes:
       - rabbitmqdata:/var/lib/rabbitmq
 

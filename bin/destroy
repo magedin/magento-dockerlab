@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
-source ./env/config.env
-source ./env/magento.env
+
+source ./var/actions/env_create
+source ./var/env/config.env
+source ./.env
 
 bin/remove -a
 #rm -rf $EXTRACT_DIR

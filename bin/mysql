@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-source env/db.env
+source ./var/actions/env_create
+source ./.env
 
 COMMAND_BASE="mysql -h${MYSQL_HOST} -u${MYSQL_USER} -p${MYSQL_PASSWORD} -A ${MYSQL_DATABASE}"
 

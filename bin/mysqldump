@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-source env/db.env
+source ./var/actions/env_create
+source ./.env
 
 FILENAME="${MYSQL_DUMP_DIR}/magento.sql"
 #FILENAME="magento.sql"

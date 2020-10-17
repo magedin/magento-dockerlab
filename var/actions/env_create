@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+function copy() {
+    echo "# - $1 Variables ----------------------------------" | cat - $2 >> .env
+
+    if [ ! -z $3 ]; then
+      echo >> .env
+    fi
+}
+
+if [ ! -f .env ]; then
+  touch .env
+
+  copy MAGENTO       ./var/env/magento.env y
+  copy DATABASE      ./var/env/db.env y
+  copy REDIS         ./var/env/redis.env y
+  copy ELASTICSEARCH ./var/env/elasticsearch.env y
+  copy RABBITMQ      ./var/env/rabbitmq.env
+fi
