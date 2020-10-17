@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-source ./var/actions/env_create
+source bin/setup-env
 source ./var/actions/services_status
 
 if ( ! areServicesRunning ); then
