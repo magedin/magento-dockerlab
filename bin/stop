@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-source ./var/actions/services_status -s
+source ./var/actions/services_status
 
 if ( areServicesStopped ); then
     echo "Services are already stopped.";

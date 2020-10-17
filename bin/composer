@@ -1,2 +1,11 @@
 #!/usr/bin/env bash
+
+source ./var/actions/services_status
+
+if ( ! areServicesRunning ); then
+    echo "Services are not running.";
+    exit 1;
+fi
+
+
 bin/cli composer "$@"

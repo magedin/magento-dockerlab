@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-source ./var/actions/services_status -s
+source ./var/actions/services_status
 
 if ( ! areServicesRunning ); then
     echo "Services are not running. Please run bin/up prior to installation.";

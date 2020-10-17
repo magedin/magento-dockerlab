@@ -1,34 +1,11 @@
 #!/usr/bin/env bash
 
-VERBOSE=0;
-
-# Reference: https://sookocheff.com/post/bash/parsing-bash-script-arguments-with-shopts/
-while getopts ":s" opt; do
-    case ${opt} in
-        s )
-            VERBOSE=1;
-            ;;
-        * )
-            echo "Default option."
-            exit 1;
-            ;;
-    esac
-done
-shift $((OPTIND -1))
-
-
 function areServicesRunning() {
     RESULT=$(bin/status --filter "status=running" --services)
 
     if [ -z "$RESULT" ]; then
-        if [ "$VERBOSE" == 0 ]; then
-            echo "Services are NOT running."
-        fi
         return 1;
     else
-        if [ "$VERBOSE" == 0 ]; then
-            echo "Services ARE running."
-        fi
         return 0;
     fi
 }
@@ -38,14 +15,8 @@ function areServicesStopped() {
     RESULT=$(bin/status --filter "status=stopped" --services)
 
     if [ -z "$RESULT" ]; then
-        if [ "$VERBOSE" == 0 ]; then
-            echo "Services already running."
-        fi
         return 1;
     else
-        if [ "$VERBOSE" == 0 ]; then
-            echo "Services are already stopped."
-        fi
         return 0;
     fi   
 }
@@ -55,14 +26,8 @@ function servicesExist() {
     RESULT=$(bin/status --quiet)
 
     if [ -z "$RESULT" ]; then
-        if [ "$VERBOSE" == 0 ]; then
-            echo "Services are already down."
-        fi
         return 1;
     else
-        if [ "$VERBOSE" == 0 ]; then
-            echo "Services already up."
-        fi
         return 0;
     fi
 }
