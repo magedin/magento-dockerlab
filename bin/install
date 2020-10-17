@@ -1,5 +1,12 @@
 #!/usr/bin/env bash
 
+source ./var/actions/services_status -s
+
+if ( ! areServicesRunning ); then
+    echo "Services are not running. Please run bin/up prior to installation.";
+    exit 1;
+fi
+
 if [ "$1" ]; then
   bin/download "$1"
 fi

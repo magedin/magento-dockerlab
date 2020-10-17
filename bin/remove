@@ -1,5 +1,12 @@
 #!/usr/bin/env bash
 
+source ./var/actions/services_status -s
+
+if ( ! servicesExist ); then
+    echo "Services are already down.";
+    exit 1;
+fi
+
 function help() {
     printf "bin/$(basename "$0") [-h] [-av]
 

@@ -1,3 +1,10 @@
 #!/usr/bin/env bash
 
+source ./var/actions/services_status -s
+
+if ( areServicesStopped ); then
+    echo "Services are already stopped.";
+    exit 1;
+fi
+
 bin/docker-compose stop $1

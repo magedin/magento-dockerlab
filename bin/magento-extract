@@ -3,16 +3,6 @@
 
 source ./env/config.env
 
-if [ -z "$1" ]; then
-	source ./env/magento.env
-else
-	MAGENTO_VERSION="$1"
-fi
-
-FILE_NAME=$MAGENTO_VERSION.tar.gz
-SOURCE_FILE=$DOWNLOAD_DIR/$FILE_NAME
-
-mkdir -p $EXTRACT_DIR
 
 function isTargetDirEmpty() {
   if [ -d $1 ] && [ "$(ls -A $1)" ]; then
@@ -20,6 +10,7 @@ function isTargetDirEmpty() {
       exit 1
   fi
 }
+
 
 function sourceFileExists() {
   if [ ! -f $1 ]; then
@@ -37,6 +28,18 @@ function sourceFileExists() {
     bin/magento-download $MAGENTO_VERSION
   fi
 }
+
+
+if [ -z "$1" ]; then
+	source ./env/magento.env
+else
+	MAGENTO_VERSION="$1"
+fi
+
+FILE_NAME=$MAGENTO_VERSION.tar.gz
+SOURCE_FILE=$DOWNLOAD_DIR/$FILE_NAME
+
+mkdir -p $EXTRACT_DIR
 
 isTargetDirEmpty $EXTRACT_DIR
 sourceFileExists $SOURCE_FILE
