@@ -14,7 +14,7 @@ fi
 
 source ./.env
 
-BASE_URL=${1:-magento2.test}
+#BASE_URL=${1:-magento2.test}
 
 #echo "Waiting for all the services to be up and running..."
 #sleep 5 #Ensure containers are started...
