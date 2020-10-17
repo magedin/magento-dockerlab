@@ -16,6 +16,7 @@ else
 fi
 
 bin/magento cache:clean "$@" &> /dev/null
+echo "Rebuilding the cache..."
 bin/magento &> /dev/null
 
 if [ $ENABLE == 1 ]; then
