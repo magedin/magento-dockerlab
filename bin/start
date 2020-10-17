@@ -6,7 +6,7 @@ if [ ! -d "$EXTRACT_DIR" ]; then
   mkdir -p $EXTRACT_DIR
 fi
 
-source bin/setup-env
+source bin/create-envfile
 var/actions/xdebug_prepare
 bin/docker-compose up -d --remove-orphans $1
 
