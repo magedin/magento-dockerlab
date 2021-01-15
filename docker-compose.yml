@@ -62,7 +62,7 @@ services:
     env_file: var/env/kibana.env
 
   rabbitmq:
-    image: rabbitmq:3.7-management
+    image: magedin/rabbitmq:3.8-management
     ports:
       - "15672:15672"
       - "5672:5672"
