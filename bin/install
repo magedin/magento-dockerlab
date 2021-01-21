@@ -53,18 +53,20 @@ fi
 #bin/clinotty composer global require hirak/prestissimo
 #bin/clinotty composer update
 
+MAGENTO_URL=https://$BASE_URL/
+
 INSTALL_COMMAND="setup:install \
-  --db-host="$MYSQL_HOST" \
-  --db-name="$MYSQL_DATABASE" \
-  --db-user="$MYSQL_USER" \
-  --db-password="$MYSQL_PASSWORD" \
-  --base-url=http://$BASE_URL/ \
-  --backend-frontname="$ADMIN_URI" \
-  --admin-firstname="$ADMIN_FIRSTNAME" \
-  --admin-lastname="$ADMIN_LASTNAME" \
-  --admin-email="$ADMIN_EMAIL" \
-  --admin-user="$ADMIN_USER" \
-  --admin-password="$ADMIN_PASSWORD" \
+  --db-host="${MYSQL_HOST}" \
+  --db-name="${MYSQL_DATABASE}" \
+  --db-user="${MYSQL_USER}" \
+  --db-password="${MYSQL_PASSWORD}" \
+  --base-url=${MAGENTO_URL}/ \
+  --backend-frontname="${ADMIN_URI}" \
+  --admin-firstname="${ADMIN_FIRSTNAME}" \
+  --admin-lastname="${ADMIN_LASTNAME}" \
+  --admin-email="${ADMIN_EMAIL}" \
+  --admin-user="${ADMIN_USER}" \
+  --admin-password="${ADMIN_PASSWORD}" \
   --language=$LANGUAGE \
   --currency=$CURRENCY \
   --timezone=$TIMEZONE \
@@ -94,6 +96,12 @@ echo "Turning on developer mode.."
 bin/clinotty bin/magento deploy:mode:set developer
 
 bin/clinotty bin/magento indexer:reindex
+
+echo "Your installation is ready. Please find below the details of it."
+echo "Magento Url: ${MAGENTO_URL}"
+echo "Admin Path: ${ADMIN_URI}"
+echo "Admin Username: ${ADMIN_USER}"
+echo "Admin Password: ${ADMIN_PASSWORD}"
 
 # echo "Forcing deploy of static content to speed up initial requests..."
 # bin/clinotty bin/magento setup:static-content:deploy -f
