@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 source bin/create-envfile
-source ./var/actions/services_status
+source ./bin/helper/services-status
 
 if ( ! areServicesRunning ); then
     echo "Services are not running. Please run bin/up prior to installation.";

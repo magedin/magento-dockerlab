@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 source ./.env
-source ./var/actions/services_status
+source ./bin/helper/services-status
 
 if ( ! areServicesRunning ); then
     echo "Services are not running.";
@@ -50,14 +50,6 @@ cp ${TEMPLATE_SSL} ${FILE}
 sed -i -e "s/{{host}}/${HOST}/g" ${FILE}
 sed -i -e "s/{{upstream}}/${HASH}/g" ${FILE}
 
-# Restart nginx to apply the updates
-echo "Checking if nginx configuration is valid..."
-if ( ! bin/nginx -t $1 &> /dev/null ); then
-  echo "Nginx configuration is not valid.";
-  exit 1;
-fi
-
-echo "Reloading nginx configuration..."
-bin/nginx -s reload $1 &> /dev/null
+bin/nginx-reload
 
 echo "Done!"
