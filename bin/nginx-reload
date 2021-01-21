@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+# Restart nginx to apply the updates
+echo "Checking if nginx configuration is valid..."
+if ( ! bin/nginx -t $1 &> /dev/null ); then
+  echo "Nginx configuration is not valid.";
+  exit 1;
+fi
+
+echo "Reloading nginx configuration..."
+bin/nginx -s reload $1 &> /dev/null
