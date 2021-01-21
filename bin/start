@@ -7,7 +7,7 @@ if [ ! -d "$EXTRACT_DIR" ]; then
 fi
 
 source bin/create-envfile
-var/actions/xdebug_prepare
+./bin/helper/xdebug-prepare
 bin/docker-compose up -d --remove-orphans $1
 
 ## Blackfire support

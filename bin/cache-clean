@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-source var/actions/xdebug_status
+source ./bin/helper/xdebug-status
 
 ENABLE=0
 

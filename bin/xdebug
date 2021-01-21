@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-source ./var/actions/xdebug_status
+source ./bin/helper/xdebug-status
 
 function help() {
     printf "bin/$(basename "$0") [-h] [-des]

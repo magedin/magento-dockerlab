@@ -6,7 +6,7 @@ COMPOSE_TEMPLATE=./var/template/docker-compose/custom.yml
 COMPOSE_CUSTOM=./docker-compose.custom.yml
 
 function getDockerIp() {
-    DOCKER_IP=$(var/actions/docker_ip);
+    DOCKER_IP=$(./bin/helper/docker-ip);
     echo $DOCKER_IP;
 }
 
