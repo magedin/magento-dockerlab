@@ -2,7 +2,7 @@
 
 bin/magento-extract
 bin/up
-var/actions/nginx_vhost
+bin/setup-vhost
 bin/copytocontainer --all
 bin/install
 echo "Enjoy!"

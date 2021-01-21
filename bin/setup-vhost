@@ -1,0 +1,56 @@
+#!/usr/bin/env bash
+
+source ./.env
+source ./var/actions/services_status
+
+if ( ! areServicesRunning ); then
+    echo "Services are not running.";
+    exit 1;
+fi
+
+HOST="$BASE_URL"
+HASH="fastcgi_$(./var/actions/random)"
+
+[ -z "$HOST" ] && echo "There's no BASE_URL specified. Please check the file .env." && exit;
+
+TEMPLATE_DIR=./var/template/nginx
+
+TEMPLATE_UPSTREAM=${TEMPLATE_DIR}/upstream.conf
+TEMPLATE_NO_SSL=${TEMPLATE_DIR}/magento2.conf
+TEMPLATE_SSL=${TEMPLATE_DIR}/magento2-ssl.conf
+
+DESTINY_DIR=config/nginx/conf.d
+DESTINY_UPSTREAM_DIR=${DESTINY_DIR}/"$HOST"
+DESTINY_UPSTREAM_FILE=${DESTINY_UPSTREAM_DIR}.conf
+
+if [ -f ${DESTINY_FILE} ]; then
+  rm -rf ${DESTINY_FILE}
+  rm -rf ${DESTINY_DIR}/${HOST}
+fi
+
+echo "Generating SSL certificates..."
+bin/mkcert-generate ${HOST} $1 &> /dev/null
+
+echo "Setting up the vhost in nginx..."
+cp ${TEMPLATE_UPSTREAM} ${DESTINY_UPSTREAM_FILE}
+sed -i -e "s/{{host}}/${HOST}/g" ${DESTINY_UPSTREAM_FILE}
+sed -i -e "s/{{upstream}}/${HASH}/g" ${DESTINY_UPSTREAM_FILE}
+
+mkdir -p ${DESTINY_UPSTREAM_DIR}
+
+# Copying and replacing the placeholders from vhost file (NO SSL).
+FILE=${DESTINY_UPSTREAM_DIR}/default.conf
+cp ${TEMPLATE_NO_SSL} ${FILE}
+sed -i -e "s/{{host}}/${HOST}/g" ${FILE}
+sed -i -e "s/{{upstream}}/${HASH}/g" ${FILE}
+
+# Copying and replacing the placeholders from vhost file (SSL).
+FILE=${DESTINY_UPSTREAM_DIR}/ssl.conf
+cp ${TEMPLATE_SSL} ${FILE}
+sed -i -e "s/{{host}}/${HOST}/g" ${FILE}
+sed -i -e "s/{{upstream}}/${HASH}/g" ${FILE}
+
+# Restart nginx to apply the updates
+echo "Reloading nginx configuration..."
+bin/nginx -t
+bin/nginx -s reload
