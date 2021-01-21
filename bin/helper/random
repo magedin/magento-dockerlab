@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+echo $(openssl rand -hex 12)

@@ -9,7 +9,7 @@ if ( ! areServicesRunning ); then
 fi
 
 HOST="$BASE_URL"
-HASH="fastcgi_$(./var/actions/random)"
+HASH="fastcgi_$(./bin/helper/random)"
 
 [ -z "$HOST" ] && echo "There's no BASE_URL specified. Please check the file .env." && exit;
 

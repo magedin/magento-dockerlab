@@ -1,4 +1,0 @@
-#!/usr/bin/env bash
-
-VALUE=$(openssl rand -hex 12)
-echo $VALUE
