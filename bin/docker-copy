@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+[ -z "$1" ] && echo "Please specify a directory or file to copy from container (ex. vendor, --all)" && exit
+
+CONTAINER=$1
+DIR_FROM=$2
+DIR_TO=$3
+
+docker cp $(docker-compose ps -q ${CONTAINER}|awk '{print $1}'):${DIR_FROM} ${DIR_TO}

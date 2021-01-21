@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+CA_DIR_CONTAINER=/var/www/ssl/ca
+CA_DIR_HOST=./var/ssl/ca/
+
+mkdir -p ${CA_DIR_HOST}
+rm -rf ${CA_DIR_HOST}/*.pem
+
+echo "Copying CA files to ${CA_DIR_HOST}"
+
+bin/docker-copy nginx ${CA_DIR_CONTAINER}/rootCA.pem     ${CA_DIR_HOST}
+bin/docker-copy nginx ${CA_DIR_CONTAINER}/rootCA-key.pem ${CA_DIR_HOST}

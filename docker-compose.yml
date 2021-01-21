@@ -12,11 +12,14 @@ services:
     links:
       - db
       - php
+    environment:
+      SSL_CA_DIR: /var/www/ssl/ca
+      SSL_CERT_DIR: /var/www/ssl/certificates
     volumes: &appvolumes
       - ~/.composer:/var/www/.composer:cached
       - appdata:/var/www/html
       - sockdata:/sock
-      - ssldata:/etc/nginx/certs
+      - ssldata:/var/www/ssl
 
   php:
     image: magedin/magento2-php:7.4-fpm-buster

@@ -14,6 +14,8 @@ if [ -f $DEST ]; then
   rm -rf $DEST
 fi
 
+bin/mkcert-generate $HOST
+
 cp $TEMPLATE $DEST
 sed -i -e "s/{{host}}/$HOST/g" $DEST
 sed -i -e "s/{{upstream}}/$UPSTREAM/g" $DEST

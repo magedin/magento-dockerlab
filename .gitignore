@@ -4,4 +4,5 @@
 /*.sql
 /*.tar.*
 /*.gz
+/*.pem
 /.env

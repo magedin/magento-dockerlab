@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+if [ -z "$1" ]; then
+  echo "Please specify a hostname like localhost, magento2.test, etc.";
+  exit 1;
+fi
+
+CERT_DIR=/var/www/ssl/certificates
+CA_DIR=/var/www/ssl/ca
+
+FILE_PREFIX=$1
+KEY_FILE=${CERT_DIR}/${FILE_PREFIX}-key.pem
+CERT_FILE=${CERT_DIR}/${FILE_PREFIX}.pem
+
+bin/exec nginx rm -rf ${KEY_FILE} ${CERT_FILE} ${CA_DIR}/*.pem
+
+bin/exec nginx mkdir -p ${CERT_DIR}
+bin/mkcert -key-file ${KEY_FILE} -cert-file ${CERT_FILE} "$@"
+
+bin/mkcert-ca-copy
