@@ -51,6 +51,13 @@ sed -i -e "s/{{host}}/${HOST}/g" ${FILE}
 sed -i -e "s/{{upstream}}/${HASH}/g" ${FILE}
 
 # Restart nginx to apply the updates
+echo "Checking if nginx configuration is valid..."
+if ( ! bin/nginx -t $1 &> /dev/null ); then
+  echo "Nginx configuration is not valid.";
+  exit 1;
+fi
+
 echo "Reloading nginx configuration..."
-bin/nginx -t
-bin/nginx -s reload
+bin/nginx -s reload $1 &> /dev/null
+
+echo "Done!"
