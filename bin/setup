@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
 bin/magento-extract
-var/actions/nginx_vhost
 bin/up
+var/actions/nginx_vhost
 bin/copytocontainer --all
 bin/install
 echo "Enjoy!"
