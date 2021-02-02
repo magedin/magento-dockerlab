@@ -75,16 +75,6 @@ services:
       - rabbitmqlog:/var/log/rabbitmq
     hostname: rabbitmq
 
-  jenkins:
-    image: jenkins/jenkins:latest
-    ports:
-      - "8000:8080"
-      - "50000:50000"
-    # env_file: var/env/rabbitmq.env
-    volumes:
-      - jenkinsdata:/var/jenkins_home
-    hostname: jenkins
-
   varnish:
     image: magedin/magento2-varnish:latest
     ports:
@@ -109,4 +99,3 @@ volumes:
   sockdata:
   ssldata:
   esdata:
-  jenkinsdata:

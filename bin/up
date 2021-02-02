@@ -1,2 +1,4 @@
 #!/usr/bin/env bash
-bin/start $1
+echo "Getting the environment up. Please wait..."
+bin/start $1 &> /dev/null
+echo "Done! Have good ideas!"

@@ -1,2 +1,4 @@
 #!/usr/bin/env bash
-bin/remove
+echo "Getting the environment down. Please wait..."
+bin/remove &> /dev/null
+echo "Done! Take some rest and get ready for the next battle."
