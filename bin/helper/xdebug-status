@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+ACTIVE_FILE=/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+CONFIG_FILE=/usr/local/etc/php/conf.d/zzz-xdebug.ini
+
 function isXdebugEnabled() {
     RESULT=$(bin/php -m | grep "Xdebug")
 
@@ -23,7 +26,7 @@ function disableXdebug() {
     fi
 
     echo "Disabling Xdebug..."
-    bin/cli sed -i -e 's/^zend_extension/\;zend_extension/g' /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+    bin/cli sed -i -e 's/^zend_extension/\;zend_extension/g' ${ACTIVE_FILE}
     rstartContainers
     echo "Xdebug has been disabled."
 }
@@ -36,9 +39,18 @@ function enableXdebug() {
     fi
 
     echo "Enabling Xdebug..."
-    bin/cli sed -i -e 's/^\;zend_extension/zend_extension/g' /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+    bin/cli sed -i -e 's/^\;zend_extension/zend_extension/g' ${ACTIVE_FILE}
     rstartContainers
     echo "Xdebug has been enabled."
+}
+
+
+function changeXdebugMode() {
+  XDEBUG_MODE=$1
+  echo "Setting Xdebug mode..."
+  bin/cli sed -i -e "s/^xdebug\.mode\=.*/xdebug\.mode\=${XDEBUG_MODE}/g" ${CONFIG_FILE}
+  rstartContainers
+  echo "Xdebug mode has been changed to ${XDEBUG_MODE}."
 }
 
 

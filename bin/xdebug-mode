@@ -1,0 +1,57 @@
+#!/usr/bin/env bash
+
+source ./bin/helper/xdebug-status
+
+function help() {
+    printf "bin/$(basename "$0") [-h] [-des]
+
+where:
+    -h  Show this help text
+    -d  Disbale Xdebug
+    -e  Enable Xdebug
+    -s  Show Xdebug status
+";
+}
+
+# Reference: https://sookocheff.com/post/bash/parsing-bash-script-arguments-with-shopts/
+while getopts ":desh" opt; do
+    case ${opt} in
+        d )
+            disableXdebug
+            exit 0;
+            ;;
+        e )
+            enableXdebug
+            exit 0;
+            ;;
+        s )
+            if ( isXdebugEnabled ); then
+              echo "Xdebug is ENABLED."
+            else
+              echo "Xdebug is DISABLED."
+            fi
+            exit 0;
+            ;;
+
+        h )
+            help;
+            exit 0;
+            ;;
+        \? )
+            #help;
+            echo "Invalid option.";
+            exit 0;
+            ;;
+        : )
+            echo "Invalid option.";
+            exit 1;
+            ;;
+        * )
+            echo "Default option."
+            exit 1;
+            ;;
+    esac
+done
+shift $((OPTIND -1))
+
+changeXdebugMode $1
