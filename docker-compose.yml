@@ -22,7 +22,7 @@ services:
       - ssldata:/var/www/ssl
 
   php:
-    image: magedin/magento2-php:7.4-fpm-buster
+    image: magedin/magento2-php:7.4
     user: www
     links:
       - db
