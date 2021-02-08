@@ -8,10 +8,10 @@ if ( ! areServicesRunning ); then
     exit 1;
 fi
 
-HOST="$BASE_URL"
+HOST="${BASE_URL}"
 HASH="fastcgi_$(./bin/helper/random)"
 
-[ -z "$HOST" ] && echo "There's no BASE_URL specified. Please check the file .env." && exit;
+[ -z "${HOST}" ] && echo "There's no BASE_URL specified. Please check the file .env." && exit;
 
 TEMPLATE_DIR=./var/template/nginx
 
