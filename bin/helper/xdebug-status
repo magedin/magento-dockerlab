@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
-ACTIVE_FILE=/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
-CONFIG_FILE=/usr/local/etc/php/conf.d/zzz-xdebug.ini
+INI_DIR=/usr/local/etc/php/conf.d
+ACTIVE_FILE=${INI_DIR}/docker-php-ext-xdebug.ini
+CONFIG_FILE=${INI_DIR}/zzz-xdebug.ini
 
 function isXdebugEnabled() {
     RESULT=$(bin/php -m | grep "Xdebug")
