@@ -49,9 +49,18 @@ function enableXdebug() {
 function changeXdebugMode() {
   XDEBUG_MODE=$1
   echo "Setting Xdebug mode..."
-  bin/cli sed -i -e "s/^xdebug\.mode\=.*/xdebug\.mode\=${XDEBUG_MODE}/g" ${CONFIG_FILE}
+  bin/cli sed -i -e "s/^xdebug.mode.*/xdebug.mode = ${XDEBUG_MODE}/g" ${CONFIG_FILE}
   rstartContainers
   echo "Xdebug mode has been changed to ${XDEBUG_MODE}."
+}
+
+
+function changeRequestMode() {
+  XDEBUG_REQUEST_MODE=$1
+  echo "Setting Xdebug request mode..."
+  bin/cli sed -i -e "s/^xdebug.start_with_request.*/xdebug.start_with_request = ${XDEBUG_REQUEST_MODE}/g" ${CONFIG_FILE}
+  rstartContainers
+  echo "Xdebug request mode has been changed to ${XDEBUG_REQUEST_MODE}."
 }
 
 

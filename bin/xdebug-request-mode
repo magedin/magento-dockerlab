@@ -1,0 +1,54 @@
+#!/usr/bin/env bash
+
+source ./bin/helper/xdebug-status
+
+function help() {
+    printf "bin/$(basename "$0") [-h] [-yt]
+
+where:
+    -h  Show this help text
+    -y  Set mode to yes
+    -t  Set mode to "trigger"
+";
+}
+
+if [ -z "$1" ]; then
+  echo "Please specify an option."
+  help
+  exit 1;
+fi
+
+# Reference: https://sookocheff.com/post/bash/parsing-bash-script-arguments-with-shopts/
+while getopts ":hyt" opt; do
+    case ${opt} in
+        y )
+            changeRequestMode yes
+            exit 0;
+            ;;
+        t )
+            changeRequestMode trigger
+            exit 0;
+            ;;
+
+        h )
+            help;
+            exit 0;
+            ;;
+        \? )
+            #help;
+            echo "Invalid option.";
+            exit 0;
+            ;;
+        : )
+            echo "Invalid option.";
+            exit 1;
+            ;;
+        * )
+            echo "Default option."
+            exit 1;
+            ;;
+    esac
+done
+shift $((OPTIND -1))
+
+changeRequestMode $1
