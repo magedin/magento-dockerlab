@@ -83,7 +83,7 @@ services:
 
   # Disabling cron by default as it uses higher CPU, enable if needed
   #cron:
-  #  image: markoshust/magento-php:7.4-fpm-0
+  #  image: magedin/magento2-php:7.4
   #  user: root
   #  command: /usr/local/bin/cronstart
   #  tty: true
