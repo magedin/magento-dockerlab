@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-source bin/create-envfile
+source ./bin/create-envfile
 source ./bin/helper/services-status
 
 if ( ! areServicesRunning ); then

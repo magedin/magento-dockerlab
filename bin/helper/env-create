@@ -1,15 +1,17 @@
 #!/usr/bin/env bash
 
+BASE_FILE=.env
+
 function copy() {
     echo "# - $1 Variables ----------------------------------" | cat - $2 >> .env
 
     if [ ! -z $3 ]; then
-      echo >> .env
+      echo >> $BASE_FILE
     fi
 }
 
-if [ ! -f .env ]; then
-  touch .env
+if [ ! -f $BASE_FILE ]; then
+  touch $BASE_FILE
 
   copy MAGENTO       ./var/env/magento.env y
   copy DATABASE      ./var/env/db.env y

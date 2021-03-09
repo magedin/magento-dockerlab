@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+source ./bin/create-envfile
+
 bin/magento-extract
 bin/up
 bin/setup-vhost
