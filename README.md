@@ -37,7 +37,54 @@ This configuration has been tested on Linux.
 
 ## Getting Started
 
-TBD
+This docker compose project is intended to make the developer's life easier when it comes to Magento 2 development environment. The Magento 2 installation process is very straightforward by using this project.
+
+### Installing Everything Automatically
+
+In many cases, when we are starting a new project or we just want to play around with Magento 2, we just need to setup a new environment without any complexity, configuration or anything like that. The problem is that most of the times we struggle so much with setting up a new environment that we give up in the middle of the process.
+
+This docker compose has an automation to avoid any headaches when it comes to having a Magento 2 running in your local machine. Just follow the following steps:
+
+#### Setup a Virtual Host
+
+With a vhost it becomes easier to install and run Magento 2.
+
+- Open your terminal;
+- Run `> sudo vim /etc/hosts`;
+- Add the follwing line if it does not exist: `127.0.0.1 ::1  magento2.test`;
+- Save the document.
+
+#### Install Magento 2
+
+This is very simple!
+
+- Run `bin/setup`
+
+#### Test the New Installation
+
+Now go to your default browser and type the following address in the address bar:
+
+`https://magento2.test`
+
+Because of the SSL was a self-signed one the browser will complain about the risk of accessing this resource, blá, blá, blá. Just keep on accessing the website.
+
+#### Setup Self Signed SSL
+
+For each installation of this project you'll have a new Certified Authority (CA) file generated. You probably don't know exactly what this means and what's it importance of this file but, in a nutshell, I can say that this file makes your browser to trust your self-signed SSL certificate as if you had bought one.
+
+To import the CA file you need to take the following steps:
+
+##### For Google Chrome
+
+- Go to `Settings > Privacy and Security > Security > Manage Certificates > Authorities > Import`.
+- Navigate to the root project where your Magento was installed and go to `var/ssl/ca` and choose the auto-generated file `rootCA.pem`.
+
+##### For Firefox
+
+- Go to `Preferences > Privacy & Security > Certificates > View Certificates > Authorities > Import`.
+- Navigate to the root project where your Magento was installed and go to `var/ssl/ca` and choose the auto-generated file `rootCA.pem`.
+
+- That's it! Now the little locks in the left side of your browser's address bar is green and you are not going to be warned again about self-signed certificates for this project.
 
 ## Debugging Magento 2 with XDebug
 
