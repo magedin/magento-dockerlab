@@ -36,9 +36,16 @@ function removeContainers() {
     echo "Done!";
 }
 
+function removeNetworks() {
+    echo "Removing networks...";
+    bin/docker network rm magento_dockerlab
+    echo "Done!";
+}
+
 # By default it removes only the containers.
 if [ -z "$1" ]; then
-    removeContainers
+    removeContainers;
+    removeNetworks;
     exit 0;
 fi
 
@@ -47,7 +54,8 @@ while getopts ":av" opt; do
     case ${opt} in
         a )
             removeContainers;
-            removeVolumes
+            removeVolumes;
+            removeNetworks;
             exit 0;
             ;;
         v )
