@@ -31,6 +31,8 @@ services:
     ports:
       - "1025"
       - "8025:8025"
+    networks:
+      - magedin
 
   jenkins:
     image: jenkins/jenkins:latest
@@ -38,6 +40,8 @@ services:
       - "8000:8080"
       - "50000:50000"
     # env_file: var/env/rabbitmq.env
+    networks:
+      - magedin
     volumes:
       - jenkinsdata:/var/jenkins_home
     hostname: jenkins
