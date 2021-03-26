@@ -8,4 +8,5 @@ if [ $? -eq 0 ]; then
     echo "Done! Have great ideas!"
 else
     echo "Something went wrong on trying to start the services."
+    exit 1
 fi
