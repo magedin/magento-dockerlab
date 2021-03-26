@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+WITH_PMM=0
+
+for option in "$@"; do
+    # echo $option
+    case $option in
+        --with-pmm)
+            WITH_PMM=1;
+            # shift # past argument with no value
+            ;;
+        --default)
+            # shift # past argument with no value
+        ;;
+    esac
+done
+
+
+function with_pmm() {
+    if [ $WITH_PMM -eq 1 ]; then
+        return 0;
+    fi
+    #return 1;
+    # For now, aways return true.
+    return 0;
+}

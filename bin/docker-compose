@@ -1,7 +1,21 @@
 #!/usr/bin/env bash
 
-if [ ! -f ./docker-compose.custom.yml ]; then
-    docker-compose -f docker-compose.yml -f docker-compose.dev.yml "$@"
-else
-    docker-compose -f docker-compose.yml -f docker-compose.dev.yml -f docker-compose.custom.yml "$@"
+source ./bin/helper/base-options
+
+# -------------------------------------------------------------
+
+OPTIONS="-f docker-compose.yml"
+
+if [ -f ./docker-compose.dev.yml ]; then
+    OPTIONS="${OPTIONS} -f docker-compose.dev.yml"
 fi
+
+if [ -f ./docker-compose.pmm.yml ] && ( with_pmm -eq 1 ) ; then
+    OPTIONS="${OPTIONS} -f docker-compose.pmm.yml"
+fi
+
+if [ -f ./docker-compose.custom.yml ]; then
+    OPTIONS="${OPTIONS} -f docker-compose.custom.yml"
+fi
+
+docker-compose ${OPTIONS} "$@"
