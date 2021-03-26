@@ -11,4 +11,4 @@ GRANT SELECT, PROCESS, SUPER, REPLICATION CLIENT, RELOAD ON *.* TO 'pmm'@'%'; \
 FLUSH PRIVILEGES;"
 
 bin/exec -T db mysql -h${MYSQL_HOST} -uroot -p${MYSQL_ROOT_PASSWORD} <<< "${QUERY}"
-bin/exec pmm pmm-admin add mysql --host=${MYSQL_HOST} --username=pmm --password=pass --query-source=perfschema magento
+bin/exec pmm pmm-admin add mysql --host=${MYSQL_HOST} --username=pmm --password=pass --query-source=perfschema magento_database

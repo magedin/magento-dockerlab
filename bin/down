@@ -2,4 +2,10 @@
 echo "Getting the environment down. Please wait..."
 #bin/remove &> /dev/null
 bin/remove
-echo "Done! Take some rest."
+
+if [ $? -eq 0 ]; then
+    echo "Done! Take some rest."
+else
+    echo "Something went wrong on trying to stop the services."
+    exit 1
+fi
