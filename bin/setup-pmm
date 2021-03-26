@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+# Refer to https://www.percona.com/software/pmm/quickstart#
+
+source ./.env
+
+bin/exec pmm pmm-admin config --server-insecure-tls --server-url=https://admin:admin@localhost
+
+QUERY="CREATE USER 'pmm'@'%' IDENTIFIED BY 'pass' WITH MAX_USER_CONNECTIONS 10; \
+GRANT SELECT, PROCESS, SUPER, REPLICATION CLIENT, RELOAD ON *.* TO 'pmm'@'%'; \
+FLUSH PRIVILEGES;"
+
+bin/exec -T db mysql -h${MYSQL_HOST} -uroot -p${MYSQL_ROOT_PASSWORD} <<< "${QUERY}"
+bin/exec pmm pmm-admin add mysql --host=${MYSQL_HOST} --username=pmm --password=pass --query-source=perfschema magento

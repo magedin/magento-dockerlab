@@ -38,7 +38,7 @@ function removeContainers() {
 
 function removeNetworks() {
     echo "Removing networks...";
-    bin/docker network rm magento_dockerlab
+    docker network rm magento_dockerlab
     echo "Done!";
 }
 
