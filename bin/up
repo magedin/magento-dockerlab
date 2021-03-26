@@ -1,4 +1,11 @@
 #!/usr/bin/env bash
 echo "Getting the environment up. Please wait..."
-bin/start $1 &> /dev/null
-echo "Done! Have good ideas!"
+
+# bin/start $1 &> /dev/null
+bin/start $1
+
+if [ $? -eq 0 ]; then
+    echo "Done! Have great ideas!"
+else
+    echo "Something went wrong on trying to start the services."
+fi
