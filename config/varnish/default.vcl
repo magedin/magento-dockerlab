@@ -8,14 +8,15 @@ import std;
 backend default {
     .host = "nginx";
     .port = "8080";
-    .first_byte_timeout = 6000s;
-#    .probe = {
-#        .url = "/health_check.php";
-#        .timeout = 60s;
-#        .interval = 60s;
-#        .window = 10;
-#        .threshold = 5;
-#   }
+    .first_byte_timeout = 60s;
+    .probe = {
+        # .url = "/health_check.php";
+        .url = "/";
+        .timeout = 60s;
+        .interval = 5s;
+        .window = 10;
+        .threshold = 5;
+   }
 }
 
 acl purge {
@@ -65,7 +66,7 @@ sub vcl_recv {
     }
 
     # Bypass health check requests
-    if (req.url ~ "/pub/health_check.php") {
+    if (req.url ~ "/health_check.php") {
         return (pass);
     }
 
@@ -102,12 +103,12 @@ sub vcl_recv {
     # Static files caching
     if (req.url ~ "^/(pub/)?(media|static)/") {
         # Static files should not be cached by default
-        return (pass);
+        #return (pass);
 
         # But if you use a few locales and don't use CDN you can enable caching static files by commenting previous line (#return (pass);) and uncommenting next 3 lines
-        #unset req.http.Https;
-        #unset req.http.X-Forwarded-Proto;
-        #unset req.http.Cookie;
+        unset req.http.Https;
+        unset req.http.X-Forwarded-Proto;
+        unset req.http.Cookie;
     }
 
     return (hash);
