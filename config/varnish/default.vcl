@@ -8,14 +8,14 @@ import std;
 backend default {
     .host = "nginx";
     .port = "8080";
-    .first_byte_timeout = 600s;
-    .probe = {
-        .url = "/pub/health_check.php";
-        .timeout = 2s;
-        .interval = 5s;
-        .window = 10;
-        .threshold = 5;
-   }
+    .first_byte_timeout = 6000s;
+#    .probe = {
+#        .url = "/health_check.php";
+#        .timeout = 60s;
+#        .interval = 60s;
+#        .window = 10;
+#        .threshold = 5;
+#   }
 }
 
 acl purge {

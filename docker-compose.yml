@@ -90,12 +90,17 @@ services:
     hostname: rabbitmq
 
   varnish:
-    image: magedin/magento2-varnish:latest
+    # image: magedin/magento2-varnish:latest
+    image: varnish:6
+    depends_on:
+      - nginx
     ports:
       - "8080:80"
       - "4443:443"
     networks:
       - magedin
+    volumes:
+      - ./config/varnish/:/etc/varnish
 
   # Disabling cron by default as it uses higher CPU, enable if needed
   #cron:
