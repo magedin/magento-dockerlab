@@ -1,22 +1,31 @@
 #!/usr/bin/env bash
 
 BASE_FILE=.env
+FILES=('services' 'magento' 'db' 'redis' 'elasticsearch' 'rabbitmq')
 
 function copy() {
-    echo "# - $1 Variables ----------------------------------" | cat - $2 >> .env
+  echo "# - ${1^^} Variables ----------------------------------" | cat - ${2} >> ${BASE_FILE}
+  echo "# - ${1^^} Variables ----------------------------------" >> ${BASE_FILE}
 
-    if [ ! -z $3 ]; then
-      echo >> $BASE_FILE
-    fi
+  if [ ! -z ${3} ]; then
+    echo >> ${BASE_FILE}
+    echo >> ${BASE_FILE}
+  fi
 }
 
-if [ ! -f $BASE_FILE ]; then
-  touch $BASE_FILE
+function create_base_file() {
+  touch ${BASE_FILE};
+}
 
-  copy SERVICES      ./var/env/services.env y
-  copy MAGENTO       ./var/env/magento.env y
-  copy DATABASE      ./var/env/db.env y
-  copy REDIS         ./var/env/redis.env y
-  copy ELASTICSEARCH ./var/env/elasticsearch.env y
-  copy RABBITMQ      ./var/env/rabbitmq.env
+function loop_files() {
+  for i in ${FILES[@]}; do
+    if [ -f ./var/env/${i}.env ]; then
+      copy ${i} ./var/env/${i}.env y;
+    fi
+  done ;
+}
+
+if [ ! -f ${BASE_FILE} ]; then
+  create_base_file
+  loop_files
 fi
