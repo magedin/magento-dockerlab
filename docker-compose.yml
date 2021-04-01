@@ -66,16 +66,6 @@ services:
     volumes:
       - esdata:/usr/share/elasticsearch/data
 
-  kibana:
-    image: kibana:7.6.2
-    depends_on:
-      - elasticsearch
-    ports:
-      - "5601:5601"
-    env_file: var/env/kibana.env
-    networks:
-      - magedin
-
   rabbitmq:
     image: magedin/rabbitmq:3.8-management
     ports:
