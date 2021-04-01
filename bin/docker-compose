@@ -1,19 +1,38 @@
 #!/usr/bin/env bash
 
 source ./bin/helper/base-options
+source ./.env
 
 # -------------------------------------------------------------
 
 OPTIONS="-f docker-compose.yml"
 
+# DEVELOPMENT
 if [ -f ./docker-compose.dev.yml ]; then
     OPTIONS="${OPTIONS} -f docker-compose.dev.yml"
 fi
 
-if [ -f ./docker-compose.pmm.yml ] && ( with_pmm -eq 1 ) ; then
+# KIBANA
+if [ -f ./docker-compose.kibana.yml ] && [ ${SERVICE_KIBANA_ENABLED} -eq 1 ] ; then
+    OPTIONS="${OPTIONS} -f docker-compose.kibana.yml"
+fi
+
+# MAILHOG
+if [ -f ./docker-compose.mailhog.yml ] && [ ${SERVICE_MAILHOG_ENABLED} -eq 1 ] ; then
+    OPTIONS="${OPTIONS} -f docker-compose.mailhog.yml"
+fi
+
+# JENKINS
+if [ -f ./docker-compose.jenkins.yml ] && [ ${SERVICE_JENKINS_ENABLED} -eq 1 ] ; then
+    OPTIONS="${OPTIONS} -f docker-compose.jenkins.yml"
+fi
+
+# PERCONA MONITORING AND MANAGEMENT
+if [ -f ./docker-compose.pmm.yml ] && [ ${SERVICE_PMM_ENABLED} -eq 1 ] ; then
     OPTIONS="${OPTIONS} -f docker-compose.pmm.yml"
 fi
 
+# CUSTOM
 if [ -f ./docker-compose.custom.yml ]; then
     OPTIONS="${OPTIONS} -f docker-compose.custom.yml"
 fi

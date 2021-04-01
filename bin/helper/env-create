@@ -13,6 +13,7 @@ function copy() {
 if [ ! -f $BASE_FILE ]; then
   touch $BASE_FILE
 
+  copy SERVICES      ./var/env/services.env y
   copy MAGENTO       ./var/env/magento.env y
   copy DATABASE      ./var/env/db.env y
   copy REDIS         ./var/env/redis.env y

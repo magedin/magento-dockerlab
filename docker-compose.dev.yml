@@ -26,29 +26,6 @@ services:
   php:
     volumes: *appvolumes
 
-  mailhog:
-    image: mailhog/mailhog
-    ports:
-      - "1025"
-      - "8025:8025"
-    networks:
-      - magedin
-
-  jenkins:
-    image: jenkins/jenkins:latest
-    ports:
-      - "8000:8080"
-      - "50000:50000"
-    # env_file: var/env/rabbitmq.env
-    networks:
-      - magedin
-    volumes:
-      - jenkinsdata:/var/jenkins_home
-    hostname: jenkins
-
   # Disabling cron by default as it uses higher CPU, enable if needed
   #cron:
   #  volumes: *appvolumes
-
-volumes:
-  jenkinsdata:
