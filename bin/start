@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+source bin/create-envfile
 source ./var/env/config.env
 source ./bin/helper/services-status
 
@@ -12,7 +13,6 @@ if [ ! -d "$EXTRACT_DIR" ]; then
   mkdir -p $EXTRACT_DIR
 fi
 
-source bin/create-envfile
 ./bin/helper/xdebug-prepare
 bin/docker-compose up -d --remove-orphans $1
 
