@@ -15,6 +15,7 @@ CERT_FILE=${CERT_DIR}/${FILE_PREFIX}.pem
 bin/exec apache rm -rf ${KEY_FILE} ${CERT_FILE} ${CA_DIR}/*.pem
 
 bin/exec apache mkdir -p ${CERT_DIR}
+bin/exec apache mkdir -p ${CA_DIR}
 bin/mkcert -key-file ${KEY_FILE} -cert-file ${CERT_FILE} "$@"
 
 bin/mkcert-ca-copy

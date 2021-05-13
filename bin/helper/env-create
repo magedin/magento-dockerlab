@@ -4,8 +4,8 @@ BASE_FILE=.env
 FILES=('services' 'magento' 'db' 'redis' 'elasticsearch' 'rabbitmq')
 
 function copy() {
-  echo "# - ${1^^} Variables ----------------------------------" | cat - ${2} >> ${BASE_FILE}
-  echo "# - ${1^^} Variables ----------------------------------" >> ${BASE_FILE}
+  echo "# - ${1} Variables ----------------------------------" | cat - ${2} >> ${BASE_FILE}
+  echo "# - ${1} Variables ----------------------------------" >> ${BASE_FILE}
 
   if [ ! -z ${3} ]; then
     echo >> ${BASE_FILE}
