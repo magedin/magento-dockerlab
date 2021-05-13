@@ -6,10 +6,13 @@ source ./.env
 # -------------------------------------------------------------
 
 OPTIONS="-f docker-compose.yml"
+OS=$(uname)
 
 # DEVELOPMENT
-if [ -f ./docker-compose.dev.yml ]; then
-    OPTIONS="${OPTIONS} -f docker-compose.dev.yml"
+if [[ -f ./docker-compose.dev.mac.yml ]] && [[ ${OS} == 'Darwin' ]]; then
+    OPTIONS="${OPTIONS} -f docker-compose.dev.mac.yml"
+elif [[ -f ./docker-compose.dev.yml ]]; then
+	OPTIONS="${OPTIONS} -f docker-compose.dev.yml"
 fi
 
 # KIBANA
@@ -35,14 +38,6 @@ fi
 # CUSTOM
 if [ -f ./docker-compose.custom.yml ]; then
     OPTIONS="${OPTIONS} -f docker-compose.custom.yml"
-fi
-
-OS=$(uname)
-
-if [[ ${OS} == 'Darwin' ]]; then
-	echo 'macOS';
-elif [[ ${OS} == 'Linux' ]]; then
-	echo 'Linux';
 fi
 
 docker-compose ${OPTIONS} "$@"

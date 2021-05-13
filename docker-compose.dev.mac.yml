@@ -11,11 +11,11 @@ services:
       - ./config/apache/conf/vhosts:/usr/local/apache2/conf/vhosts
 
       # Host mounts with performance penalty, only put what is necessary here
-      #- ./src/app/code:/var/www/html/app/code:cached
-      #- ./src/app/design:/var/www/html/app/design:cached
-      #- ./src/app/etc:/var/www/html/app/etc:cached
-      #- ./src/composer.json:/var/www/html/composer.json:cached
-      #- ./src/composer.lock:/var/www/html/composer.lock:cached
+      - ./src/app/code:/var/www/html/app/code:cached
+      - ./src/app/design:/var/www/html/app/design:cached
+      - ./src/app/etc:/var/www/html/app/etc:cached
+      - ./src/composer.json:/var/www/html/composer.json:cached
+      - ./src/composer.lock:/var/www/html/composer.lock:cached
       #- ./src/nginx.conf.sample:/var/www/html/nginx.conf:cached
       #- ./src/auth.json:/var/www/html/auth.json:cached
       #- ./src/m2-hotfixes:/var/www/html/m2-hotfixes:cached
@@ -24,7 +24,7 @@ services:
       #- ./src/var/report:/var/www/html/var/report:cached
 
       # Linux only: remove the above lines and mount the entire src directory with:
-      - ./src:/var/www/html
+      #- ./src:/var/www/html
 
   php:
     volumes: *appvolumes
