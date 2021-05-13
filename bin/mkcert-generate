@@ -1,14 +1,21 @@
 #!/usr/bin/env bash
 
-if [ -z "$1" ]; then
-  echo "Please specify a hostname like localhost, magento2.test, etc.";
-  exit 1;
+source ./.env
+
+HOST=$1
+
+if [[ -z "$1" ]] && [[ -z "$BASE_URL" ]] ; then
+    echo "Please specify a hostname like localhost, magento2.test, etc.";
+    exit 1;
+else
+	HOST=${BASE_URL}
+	echo "Using the BASE URL declared in .env file: ${HOST}";
 fi
 
 CERT_DIR=/var/www/ssl/certificates
 CA_DIR=/var/www/ssl/ca
 
-FILE_PREFIX=$1
+FILE_PREFIX=${HOST}
 KEY_FILE=${CERT_DIR}/${FILE_PREFIX}-key.pem
 CERT_FILE=${CERT_DIR}/${FILE_PREFIX}.pem
 
@@ -16,6 +23,6 @@ bin/exec apache rm -rf ${KEY_FILE} ${CERT_FILE} ${CA_DIR}/*.pem
 
 bin/exec apache mkdir -p ${CERT_DIR}
 bin/exec apache mkdir -p ${CA_DIR}
-bin/mkcert -key-file ${KEY_FILE} -cert-file ${CERT_FILE} "$@"
+bin/mkcert -key-file ${KEY_FILE} -cert-file ${CERT_FILE} "${HOST}"
 
 bin/mkcert-ca-copy
