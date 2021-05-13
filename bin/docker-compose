@@ -37,4 +37,12 @@ if [ -f ./docker-compose.custom.yml ]; then
     OPTIONS="${OPTIONS} -f docker-compose.custom.yml"
 fi
 
+OS=$(uname)
+
+if [[ ${OS} == 'Darwin' ]]; then
+	echo 'macOS';
+elif [[ ${OS} == 'Linux' ]]; then
+	echo 'Linux';
+fi
+
 docker-compose ${OPTIONS} "$@"
