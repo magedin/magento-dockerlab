@@ -7,4 +7,3 @@ source ./.env
 bin/remove -a
 #rm -rf $EXTRACT_DIR
 rm -rf $NGINX_CONF_DIR/$BASE_URL*
-rm -rf ./var/xdebug/.xdebug
