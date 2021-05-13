@@ -9,6 +9,6 @@ services:
       - elasticsearch
     ports:
       - "5601:5601"
-    env_file: var/env/kibana.env
+    env_file: ../var/env/kibana.env
     networks:
       - magedin

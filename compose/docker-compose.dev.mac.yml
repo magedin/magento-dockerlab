@@ -1,0 +1,34 @@
+# MagedIn - Magento DockerLab
+# (https://github.com/magedin/magento-dockerlab)
+version: "3.5"
+
+services:
+  apache:
+    volumes: &appvolumes
+      # To sync your SSH to the container, uncomment the following line:
+      # - ~/.ssh/id_rsa:/var/www/.ssh/id_rsa:cached
+      # - ../config/nginx/conf.d/:/etc/nginx/conf.d/
+      - ../config/apache/conf/vhosts:/usr/local/apache2/conf/vhosts
+
+      # Host mounts with performance penalty, only put what is necessary here
+      - ../src/app/code:/var/www/html/app/code:cached
+      - ../src/app/design:/var/www/html/app/design:cached
+      - ../src/app/etc:/var/www/html/app/etc:cached
+      - ../src/composer.json:/var/www/html/composer.json:cached
+      - ../src/composer.lock:/var/www/html/composer.lock:cached
+      #- ../src/nginx.conf.sample:/var/www/html/nginx.conf:cached
+      #- ../src/auth.json:/var/www/html/auth.json:cached
+      #- ../src/m2-hotfixes:/var/www/html/m2-hotfixes:cached
+      #- ../src/patches:/var/www/html/patches:cached
+      #- ../src/var/log:/var/www/html/var/log:cached
+      #- ../src/var/report:/var/www/html/var/report:cached
+
+      # Linux only: remove the above lines and mount the entire src directory with:
+      #- ../src:/var/www/html
+
+  php:
+    volumes: *appvolumes
+
+  # Disabling cron by default as it uses higher CPU, enable if needed
+  #cron:
+  #  volumes: *appvolumes
