@@ -6,17 +6,17 @@ import std;
 # For SSL offloading, pass the following header in your proxy server or load balancer: 'X-Forwarded-Proto: https'
 
 backend default {
-    .host = "nginx";
-    .port = "8080";
-    .first_byte_timeout = 60s;
-    .probe = {
-        # .url = "/health_check.php";
-        .url = "/";
-        .timeout = 60s;
-        .interval = 5s;
-        .window = 10;
-        .threshold = 5;
-   }
+    .host = "apache";
+    .port = "443";
+    # .first_byte_timeout = 60s;
+    # .probe = {
+    #     # .url = "/health_check.php";
+    #     .url = "/";
+    #     .timeout = 60s;
+    #     .interval = 5s;
+    #     .window = 10;
+    #     .threshold = 5;
+    # }
 }
 
 acl purge {

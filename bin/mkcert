@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-bin/exec nginx mkcert "$@"
+bin/exec apache mkcert "$@"

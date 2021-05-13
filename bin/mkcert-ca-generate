@@ -6,8 +6,8 @@ CA_DIR_HOST=./var/ssl/ca/
 mkdir -p ${CA_DIR_HOST}
 rm -rf ${CA_DIR_HOST}/*.pem
 
-bin/exec -T -u root nginx mkcert -install
-bin/docker-copy nginx ${CA_DIR_CONTAINER}/rootCA.pem     ${CA_DIR_HOST}
+bin/exec -T -u root apache mkcert -install
+bin/docker-copy apache ${CA_DIR_CONTAINER}/rootCA.pem      ${CA_DIR_HOST}
 # bin/docker-copy nginx ${CA_DIR_CONTAINER}/rootCA-key.pem ${CA_DIR_HOST}
 
 echo "System password requested to install certificate authority on host..."

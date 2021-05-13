@@ -2,7 +2,7 @@
 
 CA_DIR_CONTAINER=/var/www/ssl/ca
 
-bin/exec -T -u root nginx mkcert -install
+bin/exec -T -u root apache mkcert -install
 
 echo "System password requested to install certificate authority on host..."
 

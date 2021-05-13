@@ -3,12 +3,32 @@
 version: "3.5"
 
 services:
-  nginx:
-    image: magedin/nginx:1.19
+#  nginx:
+#    image: magedin/nginx:1.19
+#    user: www
+#    ports:
+#      - "80:8080"
+#      - "443:8443"
+#    links:
+#      - db
+#      - php
+#    environment:
+#      SSL_CA_DIR: /var/www/ssl/ca
+#      SSL_CERT_DIR: /var/www/ssl/certificates
+#    networks:
+#      - magedin
+#    volumes: &appvolumes
+#      - ~/.composer:/var/www/.composer:cached
+#      - appdata:/var/www/html
+#      - sockdata:/sock
+#      - ssldata:/var/www/ssl
+
+  apache:
+    image: magedin/apache:2.4
     user: www
     ports:
-      - "80:8080"
-      - "443:8443"
+      - "80:80"
+      - "443:443"
     links:
       - db
       - php
@@ -20,7 +40,6 @@ services:
     volumes: &appvolumes
       - ~/.composer:/var/www/.composer:cached
       - appdata:/var/www/html
-      - sockdata:/sock
       - ssldata:/var/www/ssl
 
   php:
@@ -83,7 +102,7 @@ services:
     # image: magedin/magento2-varnish:latest
     image: varnish:6
     depends_on:
-      - nginx
+      - apache
     ports:
       - "8080:80"
       - "4443:443"
