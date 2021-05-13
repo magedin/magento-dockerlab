@@ -20,8 +20,7 @@ services:
     volumes: &appvolumes
       - ~/.composer:/var/www/.composer:cached
       - appdata:/var/www/html
-      - sockdata:/sock
-      - ssldata:/var/www/ssl
+      - ssldata:/var/www/ssl:cached
 
   php:
     image: magedin/magento2-php:7.4
@@ -42,7 +41,7 @@ services:
     command: --max_allowed_packet=64M
     ports:
       - "3306:3306"
-    env_file: .env
+    env_file: ../.env
     networks:
       - magedin
     volumes:
@@ -71,7 +70,7 @@ services:
     ports:
       - "15672:15672"
       - "5672:5672"
-    env_file: var/env/rabbitmq.env
+    env_file: ../var/env/rabbitmq.env
     networks:
       - magedin
     volumes:
@@ -90,7 +89,7 @@ services:
     networks:
       - magedin
     volumes:
-      - ./config/varnish/:/etc/varnish
+      - ../config/varnish/:/etc/varnish
 
   # Disabling cron by default as it uses higher CPU, enable if needed
   #cron:
