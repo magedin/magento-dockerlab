@@ -2,24 +2,60 @@
 
 source ./bin/create-envfile
 
-bin/magento-extract
+VERSION=$1
+VHOST=$2
 
+# Downloading and extracting Magento
+# ----------------------------------------------------------------------------
+
+bin/magento-extract ${VERSION}
 if [ $? -eq 1 ]; then
     echo "Something went wrong when extracting Magento application."
     exit 1
 fi
 
-bin/up
-bin/setup-vhost
+# After downloading and extracting let's replace the infos on environment.
+# ----------------------------------------------------------------------------
 
+if [ ! -z "${VERSION}" ]; then
+    ./bin/env-set MAGENTO_VERSION ${VERSION}
+fi
+
+if [ ! -z "${VHOST}" ]; then
+    ./bin/env-set BASE_URL ${VHOST}
+fi
+
+# ----------------------------------------------------------------------------
+
+# Start the services
+bin/up
 if [ $? -eq 1 ]; then
-    echo "Semething went wrong when trying to setup virtual host."
+    echo "Something went wrong when trying to start the services."
     exit 1
 fi
 
-bin/copytocontainer --all
-bin/install
+# Setup virtual host
+# ----------------------------------------------------------------------------
 
+bin/setup-vhost
+if [ $? -eq 1 ]; then
+    echo "Something went wrong when trying to setup virtual host."
+    exit 1
+fi
+
+# Copy to container
+# ----------------------------------------------------------------------------
+
+bin/copytocontainer --all
+if [ $? -eq 1 ]; then
+    echo "Something went wrong when trying to copy the files to container."
+    exit 1
+fi
+
+# Make installation
+# ----------------------------------------------------------------------------
+
+bin/install
 if [ $? -eq 1 ]; then
     echo "Something went wrong with the installation process."
     exit 1

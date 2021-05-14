@@ -1,0 +1,53 @@
+#!/usr/bin/env bash
+
+CURRENT_VERSION=${1}
+
+TWO_ZERO="^2\.([0-9])\..*"
+TWO_ONE="^2\.([1-9])\..*"
+TWO_TWO="^2\.([2-9])\..*"
+TWO_THREE="^2\.([3-9])\..*"
+TWO_FOUR="^2\.([4-9])\..*"
+TWO_FIVE="^^2\.([5-9])\..*"
+TWO_SIX="^2\.([6-9])\..*"
+TWO_SEVEN="^2\.([7-9])\..*"
+
+function compare() {
+    if [[ "$1" =~ $2 ]]; then
+        return 0;
+    fi
+    return 1;
+}
+
+# ------------------------------------------
+
+function isTwoZeroOrGreater() {
+    return $(compare "$1" ${TWO_ZERO})
+}
+
+function isTwoOneOrGreater() {
+    return $(compare "$1" ${TWO_ONE})
+}
+
+function isTwoTwoOrGreater() {
+    return $(compare "$1" ${TWO_TWO})
+}
+
+function isTwoThreeOrGreater() {
+    compare "$1" ${TWO_THREE}
+}
+
+function isTwoFourOrGreater() {
+    return $(compare "$1" ${TWO_FOUR})
+}
+
+function isTwoFiveOrGreater() {
+    return $(compare "$1" ${TWO_FIVE})
+}
+
+function isTwoSixOrGreater() {
+    return $(compare "$1" ${TWO_SIX})
+}
+
+function isTwoSevenOrGreater() {
+    return $(compare "$1" ${TWO_SEVEN})
+}

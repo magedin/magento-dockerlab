@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+[ -z "$1" ] && echo "Please specify the environment variable you wanna change." && exit
+[ -z "$2" ] && echo "Please specify the environment variable value you wanna set." && exit
+
+source ./bin/create-envfile
+source ./.env
+
+VARIABLE=$1
+VALUE=$2
+
+sed -i -e "s/${VARIABLE}\=.*/${VARIABLE}\=${VALUE}/g" ./.env

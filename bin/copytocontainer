@@ -7,17 +7,22 @@ function containerId() {
 
 REAL_SRC=$(cd -P "src" && pwd)
 CONTAINER_ID=$(containerId php)
+
 if [ "$1" == "--all" ]; then
   docker cp $REAL_SRC/./ ${CONTAINER_ID}:/var/www/html/
   echo "Completed copying all files from host to container"
+
+  bin/fixowns
+  bin/fixperms
 else
   if [ -f "$REAL_SRC/$1" ]; then
     docker cp $REAL_SRC/$1 ${CONTAINER_ID}:/var/www/html/$1
   else
     docker cp $REAL_SRC/$1 ${CONTAINER_ID}:/var/www/html/$(dirname $1)
   fi
-  echo "Completed copying $1 from host to container"
-fi
 
-bin/fixowns $1
-bin/fixperms $1
+  echo "Completed copying $1 from host to container"
+
+  bin/fixowns $1
+  bin/fixperms $1
+fi

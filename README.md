@@ -24,10 +24,13 @@ Magento DockerLab is a complete stack just for your convenience and it includes 
 - MailHog
 - ElasticSearch
 - Kibana (for data visualization in ElasticSearch)
+- Percona PMM Server ([Percona Monitoring and Management](https://www.percona.com/software/database-tools/percona-monitoring-and-management))
 
 ## Compatibility
 
 - Linux
+- macOS
+- Windows (WSL2)
 
 ## Prerequisites
 
