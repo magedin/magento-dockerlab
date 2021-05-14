@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+source ./bin/helper/services-status
+
+if ( ! servicesExist ); then
+    echo "Services are down.";
+    exit 1;
+fi
+
+if [ -z "$1" ]; then
+  echo "Please specify one of the containers below:";
+  bin/status --services;
+  exit 1;
+fi
+
+bin/docker-compose ps -q $1|awk '{print $1}';

@@ -3,12 +3,12 @@
 version: "3.5"
 
 services:
-  apache:
+  nginx:
     volumes: &appvolumes
       # To sync your SSH to the container, uncomment the following line:
-      # - ~/.ssh/id_rsa:/var/www/.ssh/id_rsa:cached
-      # - ../config/nginx/conf.d/:/etc/nginx/conf.d/
-      - ../config/apache/conf/vhosts:/usr/local/apache2/conf/vhosts
+      #- ~/.ssh/id_rsa:/var/www/.ssh/id_rsa:cached
+      - ../config/nginx/conf.d/:/etc/nginx/conf.d/
+      #- ../config/apache/conf/vhosts:/usr/local/apache2/conf/vhosts
 
       # Host mounts with performance penalty, only put what is necessary here
       - ../src/app/code:/var/www/html/app/code:cached
