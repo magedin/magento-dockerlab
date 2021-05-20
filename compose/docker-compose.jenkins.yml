@@ -12,8 +12,8 @@ services:
     networks:
       - magedin
     volumes:
-      - jenkinsdata:/var/jenkins_home
+      - dockerlab_jenkinsdata:/var/jenkins_home
     hostname: jenkins
 
 volumes:
-  jenkinsdata:
+  dockerlab_jenkinsdata:

@@ -7,7 +7,7 @@ services:
     image: percona/pmm-server:2
     networks:
       - magedin
-    volumes: &pmmvolumes
+    volumes: &dockerlab_pmmvolumes
       - /opt/prometheus/data
       - /opt/consul-data
       - /var/lib/mysql
@@ -34,4 +34,4 @@ services:
       - SERVER_PASSWORD=pmm@123
 
 volumes:
-  pmmvolumes:
+  dockerlab_pmmvolumes:

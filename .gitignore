@@ -2,7 +2,7 @@
 /src
 /docker-compose.custom.yml
 /*.sql
-/*.tar.*
+/*.tar*
 /*.gz
 /.env
 *.pem

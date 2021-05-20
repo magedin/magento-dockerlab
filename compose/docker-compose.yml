@@ -19,8 +19,8 @@ services:
       - magedin
     volumes: &appvolumes
       - ~/.composer:/var/www/.composer:cached
-      - appdata:/var/www/html
-      - ssldata:/var/www/ssl:cached
+      - dockerlab_appdata:/var/www/html
+      - dockerlab_ssldata:/var/www/ssl:cached
 
   php:
     image: magedin/magento2-php:7.4
@@ -45,8 +45,8 @@ services:
     networks:
       - magedin
     volumes:
-      - dbdata:/var/lib/mysql
-      - ./var/dumps:/var/dumps
+      - dockerlab_dbdata:/var/lib/mysql
+      - ../var/dumps:/var/dumps
 
   redis:
     image: redis:5
@@ -63,7 +63,7 @@ services:
     networks:
       - magedin
     volumes:
-      - esdata:/usr/share/elasticsearch/data
+      - dockerlab_esdata:/usr/share/elasticsearch/data
 
   rabbitmq:
     image: magedin/rabbitmq:3.8-management
@@ -74,8 +74,8 @@ services:
     networks:
       - magedin
     volumes:
-      - rabbitmqdata:/var/lib/rabbitmq
-      - rabbitmqlog:/var/log/rabbitmq
+      - dockerlab_rabbitmqdata:/var/lib/rabbitmq
+      - dockerlab_rabbitmqlog:/var/log/rabbitmq
     hostname: rabbitmq
 
   varnish:
@@ -106,10 +106,9 @@ networks:
     name: magento_dockerlab
 
 volumes:
-  appdata:
-  dbdata:
-  rabbitmqdata:
-  rabbitmqlog:
-  sockdata:
-  ssldata:
-  esdata:
+  dockerlab_appdata:
+  dockerlab_dbdata:
+  dockerlab_rabbitmqdata:
+  dockerlab_rabbitmqlog:
+  dockerlab_ssldata:
+  dockerlab_esdata:

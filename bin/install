@@ -13,6 +13,14 @@ if [ "$1" ]; then
   bin/download "$1"
 fi
 
+if [ $? -eq 1 ]; then
+    echo "Magento download has failed."
+    exit 1
+fi
+
+# After downloading Magento
+# ----------------------------------------------------------------------------
+
 source ./.env
 
 #BASE_URL=${1:-magento2.test}
@@ -88,7 +96,7 @@ INSTALL_COMMAND="setup:install \
   --session-save-redis-db=${SESSION_SAVE_REDIS_DB} \
   --use-rewrites=1"
 
-if ( isTwoFourOrGreater ${MAGENTO_VERSION} ) || [[ $1 == 'latest' ]]; then
+if ( isTwoFourOrGreater ${MAGENTO_VERSION} ) || [[ ${MAGENTO_VERSION} == 'latest' ]]; then
 INSTALL_COMMAND="${INSTALL_COMMAND} \
    --search-engine=${SEARCH_ENGINE} \
    --elasticsearch-host=${ES_HOST}"
@@ -97,10 +105,35 @@ fi
 #echo $INSTALL_COMMAND
 bin/magento ${INSTALL_COMMAND}
 
+if [ $? -eq 1 ]; then
+    echo "Magento installation process has failed."
+    echo "The install parameters: ${INSTALL_COMMAND}"
+    exit 1
+fi
+
+# After installation process.
+# ----------------------------------------------------------------------------
+
 echo "Turning on developer mode.."
 bin/clinotty bin/magento deploy:mode:set developer
 
+if [ $? -eq 1 ]; then
+    echo "Setting Magento to developer mode has failed."
+    exit 1
+fi
+
+# After turning developer mode on.
+# ----------------------------------------------------------------------------
+
 bin/clinotty bin/magento indexer:reindex
+
+if [ $? -eq 1 ]; then
+    echo "Magento reindexing has failed."
+    exit 1
+fi
+
+# After reindex
+# ----------------------------------------------------------------------------
 
 echo "Your installation is ready. Please find below the details of it."
 echo "Magento Url: ${MAGENTO_URL}"
