@@ -7,7 +7,7 @@ function help() {
 
 where:
     -h  Show this help text
-    -d  Disbale Xdebug
+    -d  Disable Xdebug
     -e  Enable Xdebug
     -s  Show Xdebug status
 ";

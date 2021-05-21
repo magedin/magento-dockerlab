@@ -15,7 +15,7 @@ function isXdebugEnabled() {
 }
 
 
-function rstartContainers() {
+function restartContainers() {
   bin/restart php &> /dev/null;
 }
 
@@ -28,7 +28,7 @@ function disableXdebug() {
 
     echo "Disabling Xdebug..."
     bin/cli sed -i -e 's/^zend_extension/\;zend_extension/g' ${ACTIVE_FILE}
-    rstartContainers
+    restartContainers
     echo "Xdebug has been disabled."
 }
 
@@ -41,7 +41,7 @@ function enableXdebug() {
 
     echo "Enabling Xdebug..."
     bin/cli sed -i -e 's/^\;zend_extension/zend_extension/g' ${ACTIVE_FILE}
-    rstartContainers
+    restartContainers
     echo "Xdebug has been enabled."
 }
 
@@ -50,7 +50,7 @@ function changeXdebugMode() {
   XDEBUG_MODE=$1
   echo "Setting Xdebug mode..."
   bin/cli sed -i -e "s/^xdebug.mode.*/xdebug.mode = ${XDEBUG_MODE}/g" ${CONFIG_FILE}
-  rstartContainers
+  restartContainers
   echo "Xdebug mode has been changed to ${XDEBUG_MODE}."
 }
 
@@ -59,7 +59,7 @@ function changeRequestMode() {
   XDEBUG_REQUEST_MODE=$1
   echo "Setting Xdebug request mode..."
   bin/cli sed -i -e "s/^xdebug.start_with_request.*/xdebug.start_with_request = ${XDEBUG_REQUEST_MODE}/g" ${CONFIG_FILE}
-  rstartContainers
+  restartContainers
   echo "Xdebug request mode has been changed to ${XDEBUG_REQUEST_MODE}."
 }
 
