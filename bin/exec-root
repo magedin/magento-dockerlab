@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+[ -z "$1" ] && echo "Please specify a container and right after the command to be executed in the container." && exit
+[ -z "$2" ] && echo "Please specify the command to be executed in the container." && exit
+bin/exec -u root "$@"
