@@ -4,8 +4,8 @@ source ./.env
 
 TIMESTAMP=$(date +%Y-%m-%d_%H-%M-%S)
 
-REMOTE_FILENAME="${MYSQL_DUMP_DIR}/magento2.${TIMESTAMP}.sql.gz"
-BASE_COMMAND="/usr/bin/mysqldump -u root -p${MYSQL_PASSWORD} ${MYSQL_DATABASE} | gzip -9 > ${REMOTE_FILENAME}"
+REMOTE_FILENAME="${MYSQL_DUMP_DIR}/${MYSQL_DATABASE}.${TIMESTAMP}.sql.gz"
+BASE_COMMAND="/usr/bin/mysqldump -u root -p${MYSQL_ROOT_PASSWORD} ${MYSQL_DATABASE} | gzip -9 > ${REMOTE_FILENAME}"
 
 echo "Exporting database to ${REMOTE_FILENAME}"
 bin/exec-root -T db /bin/bash -c "${BASE_COMMAND}"
