@@ -4,12 +4,22 @@ source ./.env
 
 TIMESTAMP=$(date +%Y-%m-%d_%H-%M-%S)
 
-REMOTE_FILENAME="${MYSQL_DUMP_DIR}/${MYSQL_DATABASE}.${TIMESTAMP}.sql.gz"
+FILENAME="${MYSQL_DATABASE}.${TIMESTAMP}.sql.gz"
+REMOTE_FILENAME="${MYSQL_DUMP_DIR}/${FILENAME}"
 BASE_COMMAND="/usr/bin/mysqldump -u root -p${MYSQL_ROOT_PASSWORD} ${MYSQL_DATABASE} | gzip -9 > ${REMOTE_FILENAME}"
 
-echo "Exporting database to ${REMOTE_FILENAME}"
+echo "Exporting database to ${REMOTE_FILENAME}..."
 bin/exec-root -T db /bin/bash -c "${BASE_COMMAND}"
 bin/exec-root chown 1000: ${REMOTE_FILENAME}
+
+if ! [[ "$1" == "aws" ]] || [[ -z ${AWS_S3_BUCKET} ]] ; then
+	exit 0;
+fi
+
+LOCAL_FILENAME=./var/dumps/${FILENAME}
+
+echo "Copying the backup file to AWS S3..."
+aws s3 cp ${LOCAL_FILENAME} ${AWS_S3_PATH}/${FILENAME} --profile ${AWS_PROFILE}
 
 #echo "Copying from container to ${MYSQL_DUMP_DIR}"
 #docker cp $(bin/helper/container-id db):${REMOTE_FILENAME} ${MYSQL_DUMP_DIR}

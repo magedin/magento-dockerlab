@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 BASE_FILE=.env
-FILES=('services' 'magento' 'db' 'redis' 'elasticsearch' 'rabbitmq')
+FILES=('services' 'magento' 'db' 'redis' 'elasticsearch' 'rabbitmq' 'aws')
 
 function copy() {
   echo "# - ${1} Variables ----------------------------------" | cat - ${2} >> ${BASE_FILE}
