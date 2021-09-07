@@ -5,39 +5,39 @@ source ./.env
 
 # -------------------------------------------------------------
 
-OPTIONS="-f ./compose/docker-compose.yml"
+OPTIONS="-f ./docker-compose.yml"
 OS=$(uname)
 
 # DEVELOPMENT
-if [[ -f ./compose/docker-compose.dev.mac.yml ]] && [[ ${OS} == 'Darwin' ]]; then
-    OPTIONS="${OPTIONS} -f ./compose/docker-compose.dev.mac.yml"
-elif [[ -f ./compose/docker-compose.dev.yml ]]; then
-	OPTIONS="${OPTIONS} -f ./compose/docker-compose.dev.yml"
+if [[ -f ./docker-compose.dev.mac.yml ]] && [[ ${OS} == 'Darwin' ]]; then
+    OPTIONS="${OPTIONS} -f ./docker-compose.dev.mac.yml"
+elif [[ -f ./docker-compose.dev.yml ]]; then
+	OPTIONS="${OPTIONS} -f ./docker-compose.dev.yml"
 fi
 
 # KIBANA
-if [ -f ./compose/docker-compose.kibana.yml ] && [ "${SERVICE_KIBANA_ENABLED}" == 1 ] ; then
-    OPTIONS="${OPTIONS} -f ./compose/docker-compose.kibana.yml"
+if [ -f ./docker-compose.kibana.yml ] && [ "${SERVICE_KIBANA_ENABLED}" == 1 ] ; then
+    OPTIONS="${OPTIONS} -f ./docker-compose.kibana.yml"
 fi
 
 # MAILHOG
-if [ -f ./compose/docker-compose.mailhog.yml ] && [ "${SERVICE_MAILHOG_ENABLED}" == 1 ] ; then
-    OPTIONS="${OPTIONS} -f ./compose/docker-compose.mailhog.yml"
+if [ -f ./docker-compose.mailhog.yml ] && [ "${SERVICE_MAILHOG_ENABLED}" == 1 ] ; then
+    OPTIONS="${OPTIONS} -f ./docker-compose.mailhog.yml"
 fi
 
 # JENKINS
-if [ -f ./compose/docker-compose.jenkins.yml ] && [ "${SERVICE_JENKINS_ENABLED}" == 1 ] ; then
-    OPTIONS="${OPTIONS} -f ./compose/docker-compose.jenkins.yml"
+if [ -f ./docker-compose.jenkins.yml ] && [ "${SERVICE_JENKINS_ENABLED}" == 1 ] ; then
+    OPTIONS="${OPTIONS} -f ./docker-compose.jenkins.yml"
 fi
 
 # PERCONA MONITORING AND MANAGEMENT
-if [ -f ./compose/docker-compose.pmm.yml ] && [ "${SERVICE_PMM_ENABLED}" == 1 ] ; then
-    OPTIONS="${OPTIONS} -f ./compose/docker-compose.pmm.yml"
+if [ -f ./docker-compose.pmm.yml ] && [ "${SERVICE_PMM_ENABLED}" == 1 ] ; then
+    OPTIONS="${OPTIONS} -f ./docker-compose.pmm.yml"
 fi
 
 # CUSTOM
-if [ -f ./compose/docker-compose.custom.yml ]; then
-    OPTIONS="${OPTIONS} -f ./compose/docker-compose.custom.yml"
+if [ -f ./docker-compose.custom.yml ]; then
+    OPTIONS="${OPTIONS} -f ./docker-compose.custom.yml"
 fi
 
 docker-compose ${OPTIONS} "$@"

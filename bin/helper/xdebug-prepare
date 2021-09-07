@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-COMPOSE_DEV=./compose/docker-compose.dev.yml
+COMPOSE_DEV=./docker-compose.dev.yml
 COMPOSE_TEMPLATE=./var/template/docker-compose/custom.yml
-COMPOSE_CUSTOM=./compose/docker-compose.custom.yml
+COMPOSE_CUSTOM=./docker-compose.custom.yml
 
 function getDockerIp() {
     DOCKER_IP=$(./bin/helper/docker-ip);

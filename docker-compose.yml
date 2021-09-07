@@ -41,12 +41,12 @@ services:
     command: --max_allowed_packet=64M
     ports:
       - "3306:3306"
-    env_file: ../.env
+    env_file: ./.env
     networks:
       - magedin
     volumes:
       - dockerlab_dbdata:/var/lib/mysql
-      - ../var/dumps:/var/dumps
+      - ./var/dumps:/var/dumps
 
   redis:
     image: redis:5
@@ -70,7 +70,7 @@ services:
     ports:
       - "15672:15672"
       - "5672:5672"
-    env_file: ../var/env/rabbitmq.env
+    env_file: ./var/env/rabbitmq.env
     networks:
       - magedin
     volumes:
@@ -89,7 +89,7 @@ services:
     networks:
       - magedin
     volumes:
-      - ../config/varnish/:/etc/varnish
+      - ./config/varnish/:/etc/varnish
 
   # Disabling cron by default as it uses higher CPU, enable if needed
   #cron:
