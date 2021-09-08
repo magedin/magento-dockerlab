@@ -29,6 +29,11 @@ source ./.env
 #sleep 5 #Ensure containers are started...
 bin/clinotty chmod u+x bin/magento
 
+# Let's make sure the database exists.
+echo "Checking if the database exists... If not, it will be created...";
+bin/exec db mysql -u root -p${MYSQL_ROOT_PASSWORD} -e "CREATE DATABASE IF NOT EXISTS ${MYSQL_DATABASE} CHARACTER SET utf8 COLLATE utf8_general_ci;" 2>/dev/null;
+bin/exec db mysql -u root -p${MYSQL_ROOT_PASSWORD} -e "GRANT ALL PRIVILEGES ON ${MYSQL_DATABASE}.* TO ${MYSQL_USER};" 2>/dev/null;
+
 if hash composer 2>/dev/null; then
     MAGENTO_PUBLIC_KEY="$(composer config -gl | grep '\[http-basic.repo.magento.com.username\]' | cut -c40-)"
     MAGENTO_PRIVATE_KEY="$(composer config -gl | grep '\[http-basic.repo.magento.com.password\]' | cut -c40-)"
