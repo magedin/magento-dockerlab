@@ -7,7 +7,7 @@ HOST=$1
 if [[ -z "$1" ]] && [[ -z "$BASE_URL" ]] ; then
     echo "Please specify a hostname like localhost, magento2.test, etc.";
     exit 1;
-else
+elif [ -z "$1" ] ; then
 	HOST=${BASE_URL}
 	echo "Using the BASE URL declared in .env file: ${HOST}";
 fi
