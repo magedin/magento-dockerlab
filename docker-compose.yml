@@ -20,7 +20,7 @@ services:
     volumes: &appvolumes
       - ~/.composer:/var/www/.composer:cached
       - dockerlab_appdata:/var/www/html
-      - dockerlab_ssldata:/var/www/ssl:cached
+      - ./var/ssl:/var/www/ssl:cached
 
   php:
     image: magedin/magento2-php:7.4
