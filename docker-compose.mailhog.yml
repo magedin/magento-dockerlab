@@ -5,6 +5,8 @@ version: "3.5"
 services:
   mailhog:
     image: mailhog/mailhog
+    depends_on:
+      - php
     ports:
       - "1025"
       - "8025:8025"
