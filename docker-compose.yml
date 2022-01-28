@@ -31,7 +31,6 @@ services:
       - db
       - redis
       - elasticsearch
-      - rabbitmq
     networks:
       - magedin
     volumes: *appvolumes
@@ -65,32 +64,6 @@ services:
     volumes:
       - dockerlab_esdata:/usr/share/elasticsearch/data
 
-  rabbitmq:
-    image: magedin/rabbitmq:3.8-management
-    ports:
-      - "15672:15672"
-      - "5672:5672"
-    env_file: ./var/env/rabbitmq.env
-    networks:
-      - magedin
-    volumes:
-      - dockerlab_rabbitmqdata:/var/lib/rabbitmq
-      - dockerlab_rabbitmqlog:/var/log/rabbitmq
-    hostname: rabbitmq
-
-  varnish:
-    # image: magedin/magento2-varnish:latest
-    image: varnish:6
-    depends_on:
-      - nginx
-    ports:
-      - "8080:80"
-      - "4443:443"
-    networks:
-      - magedin
-    volumes:
-      - ./config/varnish/:/etc/varnish
-
   # Disabling cron by default as it uses higher CPU, enable if needed
   #cron:
   #  image: magedin/magento2-php:7.4
@@ -108,7 +81,5 @@ networks:
 volumes:
   dockerlab_appdata:
   dockerlab_dbdata:
-  dockerlab_rabbitmqdata:
-  dockerlab_rabbitmqlog:
   dockerlab_ssldata:
   dockerlab_esdata:

@@ -1,0 +1,25 @@
+# MagedIn - Magento DockerLab
+# (https://github.com/magedin/magento-dockerlab)
+version: "3.5"
+
+services:
+  php:
+    depends_on:
+      - rabbitmq
+
+  rabbitmq:
+    image: magedin/rabbitmq:3.8-management
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+    env_file: ./var/env/rabbitmq.env
+    networks:
+      - magedin
+    volumes:
+      - dockerlab_rabbitmqdata:/var/lib/rabbitmq
+      - dockerlab_rabbitmqlog:/var/log/rabbitmq
+    hostname: rabbitmq
+
+volumes:
+  dockerlab_rabbitmqdata:
+  dockerlab_rabbitmqlog:
