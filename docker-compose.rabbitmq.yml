@@ -12,7 +12,7 @@ services:
     ports:
       - "15672:15672"
       - "5672:5672"
-    env_file: ./var/env/rabbitmq.env
+    env_file: ./.env
     networks:
       - magedin
     volumes:
