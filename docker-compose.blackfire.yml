@@ -1,0 +1,10 @@
+# MagedIn - Magento DockerLab
+# (https://github.com/magedin/magento-dockerlab)
+version: "3.5"
+
+services:
+    blackfire:
+      image: blackfire/blackfire:2
+      env_file: ./.env
+      networks:
+        - magedin
