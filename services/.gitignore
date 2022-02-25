@@ -1,0 +1,8 @@
+/docker-compose.*.yml
+!/docker-compose.blackfire.yml
+!/docker-compose.dev.mac.yml
+!/docker-compose.dev.yml
+!/docker-compose.kibana.yml
+!/docker-compose.mailhog.yml
+!/docker-compose.rabbitmq.yml
+!/docker-compose.varnish.yml
