@@ -2,6 +2,10 @@
 /src
 /*.sql
 /*.tar*
+/*.php
+/*.yml
+/*.yaml
+!/docker-compose.yml
 /*.gz
 /.env
 *.pem
