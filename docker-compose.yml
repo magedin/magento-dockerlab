@@ -37,7 +37,7 @@ services:
     volumes: *appvolumes
 
   db:
-    image: percona:5.7
+    image: mariadb:10.4
     command: --max_allowed_packet=64M
     ports:
       - "3306:3306"
@@ -49,12 +49,12 @@ services:
       - ./var/dumps:/var/dumps
 
   redis:
-    image: redis:5
+    image: redis:6.2
     networks:
       - magedin
 
   elasticsearch:
-    image: elasticsearch:7.12.0
+    image: elasticsearch:7.17.6
     ports:
       - "9200:9200"
       - "9300:9300"
