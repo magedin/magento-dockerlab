@@ -8,3 +8,5 @@ services:
     # Uncomment two lines below & replace IP with result of: docker run --rm alpine ip route | awk 'NR==1 {print $3}'
     extra_hosts:
       - "host.docker.internal:{{IP}}"
+  php-debug:
+    <<: *php
