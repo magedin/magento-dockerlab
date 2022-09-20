@@ -13,6 +13,9 @@ services:
   php:
     volumes: *appvolumes
 
+  php-debug:
+    volumes: *appvolumes
+
   # Disabling cron by default as it uses higher CPU, enable if needed
   #cron:
   #  volumes: *appvolumes
