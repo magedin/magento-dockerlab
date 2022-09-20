@@ -1,3 +1,4 @@
 /*
-!/000_default.conf
+!/000_upstream.conf
+!/000_xdefault.conf
 !/include
