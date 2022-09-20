@@ -22,7 +22,7 @@ services:
       - dockerlab_appdata:/var/www/html
       - ./var/ssl:/var/www/ssl:cached
 
-  php:
+  php: &php
     image: magedin/magento2-php:7.4
     user: www
     links:
@@ -38,17 +38,7 @@ services:
 
   php-debug:
     image: magedin/magento2-php-debug:7.4
-    user: www
-    links:
-      - db
-    depends_on:
-      - db
-      - redis
-      - elasticsearch
-    env_file: ./.env
-    networks:
-      - magedin
-    volumes: *appvolumes
+    <<: *php
 
   db:
     image: mariadb:10.4
