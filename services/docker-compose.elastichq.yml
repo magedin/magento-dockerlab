@@ -1,0 +1,16 @@
+# MagedIn - Magento DockerLab
+# (https://github.com/magedin/magento-dockerlab)
+version: "3.5"
+
+services:
+  elastichq:
+    image: elastichq/elasticsearch-hq:latest
+    depends_on:
+      - elasticsearch
+    ports:
+      - "5000:5000"
+    environment:
+      HQ_DEFAULT_URL: http://elasticsearch:9200
+    env_file: ./.env
+    networks:
+      - magedin

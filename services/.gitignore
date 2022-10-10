@@ -6,3 +6,5 @@
 !/docker-compose.mailhog.yml
 !/docker-compose.rabbitmq.yml
 !/docker-compose.varnish.yml
+!/docker-compose.elastichq.yml
+
