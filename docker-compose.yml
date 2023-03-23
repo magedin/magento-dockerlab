@@ -66,6 +66,7 @@ services:
       - discovery.type=single-node
       - bootstrap.memory_lock=true
       - "ES_JAVA_OPTS=-Xms750m -Xmx750m"
+      - xpack.security.enabled=false
     mem_limit: 4g
     networks:
       - magedin
